@@ -24,16 +24,16 @@ def onestep(PMI,clusters,min_inc,Pcc,Pcn,Pnn,Pnc,Gn,Gcc,Pi):
             best=v
             best_inc = 0
             cv = clusters[v-1]
-            decr = np.log(Gcc.nodes[cv]['pi']**2)
+            decr = (Gcc.nodes[cv]['pi']**2)
             if Pcc[cv][cv] != 0:
-                decr =   -np.log(Pcc[cv][cv])+np.log(Gcc.nodes[cv]['pi']**2)
+                decr =   -(Pcc[cv][cv])+(Gcc.nodes[cv]['pi']**2)
             #print(Pcc[cv][cv])
             if Gcc.nodes[cv]['pi'] - Pia[v-1] > tol:
                 print(cv,Gcc.nodes[cv]['pi'], Pia[v-1],decr,Pcc[cv][cv],Gcc.nodes[cv]['pi']**2)
                 Pcvcv_new = (Pcc[cv][cv]-Pnc[v][cv]-Pcn[cv][v]+Pnn[v][v])
                 print(Pcvcv_new)
                 if Pcvcv_new != 0:
-                    decr += np.log(Pcvcv_new) - np.log((Gcc.nodes[cv]['pi']-Pia[v-1])**2)
+                    decr += (Pcvcv_new) - ((Gcc.nodes[cv]['pi']-Pia[v-1])**2)
                 nodes = []
                 for n,i in enumerate(clusters):
                     if i == cv:
@@ -102,12 +102,12 @@ def onestep(PMI,clusters,min_inc,Pcc,Pcn,Pnn,Pnc,Gn,Gcc,Pi):
                 new_Pcc = ((Pcc[c][c]+Pcn[c][v]) + (Pnc[v][c]+Pnn[v][v]))
                 old_Pcc_log = 0
                 if Pcc[c][c] != 0:
-                    old_Pcc_log = np.log(Pcc[c][c])
-                inc  = decr+ np.log(new_Pcc)-np.log((Gcc.nodes[c]['pi']+Pia[v-1])**2) \
-                     - old_Pcc_log+np.log(Gcc.nodes[c]['pi']**2)
-                # np.log(1+((Pia[v-1]*(Pnc[v][c]+Pnn[v][v])+ Gcc.nodes[c]['pi'])/(Gcc.nodes[c]['pi']*Pcc[c][c]))) -\
-                # np.log(1+((2*Pia[v-1]*Gcc.nodes[c]['pi']+Pi[v-1]**2)/(Gcc.nodes[c]['pi']**2)))
-                print(v,u,inc,new_Pcc,Pcc[c][c],next_PMI+inc,next_PMI)
+                    old_Pcc_log = (Pcc[c][c])
+                inc  = decr+ (new_Pcc)-((Gcc.nodes[c]['pi']+Pia[v-1])**2) \
+                     - old_Pcc_log+(Gcc.nodes[c]['pi']**2)
+                # (1+((Pia[v-1]*(Pnc[v][c]+Pnn[v][v])+ Gcc.nodes[c]['pi'])/(Gcc.nodes[c]['pi']*Pcc[c][c]))) -\
+                # (1+((2*Pia[v-1]*Gcc.nodes[c]['pi']+Pi[v-1]**2)/(Gcc.nodes[c]['pi']**2)))
+                print(v,u,inc)
                 if np.isnan(inc) or np.isinf(inc):
                     print(decr)
                     #print(Pia[v-1],Gcc.nodes[c]['pi'],1+((Pia[v-1]*(Pnc[u][c]+Pnn[v][v])+ Gcc.nodes[c]['pi'])/(Gcc.nodes[c]['pi']*Pcc[c][c])))
@@ -297,10 +297,12 @@ G.add_edge(4,5)
 G.add_edge(4,6)
 G.add_edge(5,6)
 G.add_edge(3,4)
-
-
-
-
+# G.add_node(1)
+# G.add_node(2)
+# G.add_node(3)
+# G.add_node(4)
+# G.add_edge(1,2)
+# G.add_edge(3,4)
 #G.add_edge(2,3)
 # G.add_edge(1,2)
 # G.add_nodes_from([i+1 for i in G_1.nodes])
@@ -331,7 +333,7 @@ a = np.arange(10)+1
 y0 =[]
 y1= []
 y2 = []
-t = 10
+t = 1
 #P = P.todense()
 P_discrete = P
 print(P)
@@ -343,9 +345,9 @@ print(Pi)
 test = 0
 for i in range(P.shape[0]):
     print(i,Pi[i],P[i,i])
-    test+=np.log(Pi[i]*P[i,i])
-    test-=np.log(Pi[i]**2)
-PMI = np.sum(np.log(Pi*P.diagonal()))-np.sum(np.log(Pi**2))
+    test+=(Pi[i]*P[i,i])
+    test-=(Pi[i]**2)
+PMI = np.sum((Pi*P.diagonal()))-np.sum((Pi**2))
 
 print("INITIIAL",test,PMI)
 # if PMI == np.log(0):
@@ -437,7 +439,7 @@ next_Pnn = copy.deepcopy(n_Pnn)
 next_clusters = copy.deepcopy(n_clusters)
 print(next_clusters)
 print(PMI)
-#exit()
+exit()
 #exit()
 next_Gnn = n_Gnn
 hierch_clusters.append((next_clusters,valid_locs))

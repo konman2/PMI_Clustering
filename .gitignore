@@ -2,4 +2,6 @@
 Graphs/*
 Graphs/*
 project/*
+*.ipynb*
+*.png
 
