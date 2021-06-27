@@ -12,7 +12,7 @@ function run_stability(filepath, time)
 % Default parameters.
 if ~exist('filepath', 'var')
     % filepath = '/Users/zexi/Codes/PyCharmProjects/MarkovStability/graphs/airport_w/';
-    filepath = 'E:\Synchronized_Files\Codes\PyCharmProjects\MarkovStability\data\snp500l\k=50\p=0.01\';
+    filepath = '../Graphs/airport_ww/';
     % filepath = '/Users/zexi/Codes/PyCharmProjects/MarkovStability/graphs/snp500ll/preprocess/alpha=0.55/';
 end
 if ~exist('time', 'var')
