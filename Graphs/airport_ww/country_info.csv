@@ -1,0 +1,225 @@
+ID,Country,Nodes,Edges
+1,Papua New Guinea,23,52
+2,Greenland,17,25
+3,United States,540,2775
+4,Iceland,5,3
+5,Ukraine,13,10
+6,Canada,204,429
+7,Belize,2,1
+8,Egypt,10,12
+9,Brazil,122,365
+10,Turkey,41,102
+11,Indonesia,63,151
+12,Algeria,26,44
+13,China,157,1326
+14,Poland,10,11
+15,Russia,101,338
+16,Benin,1,0
+17,Burkina Faso,2,1
+18,Ghana,5,4
+19,Cote d'Ivoire,1,0
+20,Nigeria,15,20
+21,Niger,1,0
+22,Tunisia,7,9
+23,Togo,1,0
+24,Belgium,5,1
+25,Germany,32,72
+26,Estonia,3,1
+27,Finland,19,21
+28,United Kingdom,52,128
+29,Guernsey,2,1
+30,Jersey,1,0
+31,Isle of Man,1,0
+32,Falkland Islands,1,0
+33,Netherlands,5,3
+34,Azerbaijan,5,2
+35,Australia,114,227
+36,Ireland,7,2
+37,Denmark,8,9
+38,Faroe Islands,1,0
+39,Luxembourg,1,0
+40,Norway,49,128
+41,Sweden,39,56
+42,Maldives,7,8
+43,Argentina,36,68
+44,Sri Lanka,5,4
+45,United Arab Emirates,8,5
+46,South Africa,18,33
+47,Botswana,4,4
+48,Congo (Brazzaville),2,1
+49,Swaziland,1,0
+50,Central African Republic,1,0
+51,Equatorial Guinea,2,1
+52,Mauritius,2,1
+53,Cameroon,5,6
+54,Zambia,6,6
+55,Comoros,1,0
+56,Reunion,2,0
+57,Madagascar,13,21
+58,Mayotte,1,0
+59,Angola,14,21
+60,Gabon,2,0
+61,Sao Tome and Principe,1,0
+62,Mozambique,10,18
+63,Seychelles,2,1
+64,Chad,1,0
+65,Zimbabwe,3,3
+66,Malawi,2,1
+67,Lesotho,1,0
+68,Congo (Kinshasa),18,24
+69,Mali,1,0
+70,Gambia,1,0
+71,Spain,40,147
+72,Sierra Leone,1,0
+73,Liberia,2,0
+74,Morocco,13,13
+75,Senegal,3,3
+76,Mauritania,3,3
+77,Cape Verde,7,9
+78,Ethiopia,13,18
+79,Somalia,5,6
+80,Burundi,1,0
+81,Italy,36,152
+82,Kenya,16,21
+83,Libya,8,8
+84,Rwanda,2,1
+85,Sudan,5,4
+86,South Sudan,1,0
+87,Tanzania,8,10
+88,Uganda,3,2
+89,Albania,1,0
+90,Bulgaria,4,3
+91,Cyprus,3,0
+92,Croatia,8,13
+93,France,55,156
+94,Saint Pierre and Miquelon,1,0
+95,Greece,39,71
+96,Hungary,2,0
+97,Slovenia,1,0
+98,Peru,19,26
+99,Czech Republic,5,1
+100,Chile,16,30
+101,Israel,5,4
+102,Malta,1,0
+103,Austria,6,6
+104,Portugal,14,28
+105,Bosnia and Herzegovina,3,1
+106,Romania,12,8
+107,Switzerland,5,3
+108,Moldova,1,0
+109,Macedonia,1,0
+110,Gibraltar,1,0
+111,Serbia,2,0
+112,Montenegro,2,0
+113,Slovakia,2,1
+114,Turks and Caicos Islands,4,4
+115,Dominican Republic,7,4
+116,Guatemala,2,1
+117,Honduras,7,10
+118,Jamaica,2,1
+119,Mexico,56,160
+120,Nicaragua,1,0
+121,Panama,7,6
+122,Costa Rica,13,17
+123,El Salvador,1,0
+124,Haiti,2,1
+125,Cuba,9,11
+126,Cayman Islands,3,3
+127,Bahamas,17,17
+128,Cook Islands,6,6
+129,Fiji,10,14
+130,Tonga,1,0
+131,Kiribati,2,0
+132,Wallis and Futuna,2,1
+133,Samoa,1,0
+134,American Samoa,1,0
+135,French Polynesia,27,52
+136,Vanuatu,27,41
+137,New Caledonia,1,0
+138,New Zealand,25,52
+139,Afghanistan,4,3
+140,Bahrain,1,0
+141,Saudi Arabia,24,58
+142,Iran,38,90
+143,Jordan,2,1
+144,Kuwait,1,0
+145,Lebanon,1,0
+146,Oman,3,2
+147,Pakistan,22,42
+148,Iraq,5,0
+149,Northern Mariana Islands,2,1
+150,Guam,1,0
+151,Marshall Islands,2,1
+152,Micronesia,4,2
+153,Palau,1,0
+154,Taiwan,9,11
+155,Japan,62,175
+156,South Korea,15,20
+157,Philippines,37,65
+158,Ecuador,13,16
+159,Paraguay,2,1
+160,Colombia,48,72
+161,Bolivia,13,23
+162,Suriname,1,0
+163,French Guiana,1,0
+164,Uruguay,2,0
+165,Venezuela,23,33
+166,Antigua and Barbuda,1,0
+167,Barbados,1,0
+168,Dominica,1,0
+169,Martinique,1,0
+170,Guadeloupe,2,1
+171,Grenada,1,0
+172,Virgin Islands,2,1
+173,Puerto Rico,6,3
+174,Saint Kitts and Nevis,2,1
+175,Saint Lucia,2,0
+176,Aruba,1,0
+177,Netherlands Antilles,5,4
+178,Anguilla,1,0
+179,Trinidad and Tobago,2,1
+180,British Virgin Islands,2,0
+181,Saint Vincent and the Grenadines,1,0
+182,Kazakhstan,17,37
+183,Kyrgyzstan,2,1
+184,Belarus,1,0
+185,Turkmenistan,1,0
+186,Tajikistan,3,0
+187,Uzbekistan,11,11
+188,India,68,179
+189,Cambodia,3,2
+190,Bangladesh,8,8
+191,Hong Kong,1,0
+192,Laos,7,8
+193,Macau,1,0
+194,Nepal,9,8
+195,Bhutan,1,0
+196,Thailand,32,50
+197,Vietnam,19,38
+198,Burma,15,21
+199,Malaysia,32,76
+200,Brunei,1,0
+201,East Timor,1,0
+202,Singapore,1,0
+203,Christmas Island,1,0
+204,Norfolk Island,1,0
+205,North Korea,1,0
+206,Mongolia,9,8
+207,Latvia,1,0
+208,Lithuania,3,0
+209,Armenia,2,0
+210,Eritrea,2,1
+211,Georgia,3,2
+212,Yemen,9,10
+213,Bermuda,1,0
+214,Solomon Islands,16,27
+215,Nauru,1,0
+216,Tuvalu,1,0
+217,Namibia,4,4
+218,Djibouti,1,0
+219,Guinea,1,0
+220,Guyana,2,0
+221,Guinea-Bissau,1,0
+222,Western Sahara,2,0
+223,Niue,1,0
+224,Cocos (Keeling) Islands,1,0
