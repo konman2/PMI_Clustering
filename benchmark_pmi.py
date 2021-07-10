@@ -1,20 +1,20 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
+name = 'entsoe'
 taus = 50
-filename = f'Predictions/airport/pmi/predicted_communities_{taus}.npy'
-filename_ac = f'Predictions/airport/ac/predicted_communities_{taus}.npy'
+filename = f'Predictions/{name}/pmi/predicted_communities_{taus}.npy'
+filename_ac = f'Predictions/{name}/ac/predicted_communities_{taus}.npy'
 
-filename_lmepmi = f'Predictions/airport/lmepmi/predicted_communities_{taus}.npy'
-filename_mac = f'Predictions/airport/mac/predicted_communities_{taus}.npy'
+filename_lmepmi = f'Predictions/{name}/lmepmi/predicted_communities_{taus}.npy'
+filename_mac = f'Predictions/{name}/mac/predicted_communities_{taus}.npy'
 
-times = np.load('Predictions/airport/pmi/times.npy')
-matr = np.load('computed_airport.npy')
-macro_comms = np.load('Graphs/airport_ww/macro_comms.npy')
-micro_comms = np.load('Graphs/airport_ww/micro_comms.npy')
-pmi_vals = np.load('Predictions/airport/pmi/values.npy')
-ac_vals = np.load('Predictions/airport/ac/values.npy')
-Pi = np.load('Pis.npy')
+times = np.load(f'Predictions/{name}/pmi/times.npy')
+matr = np.load(f'computed_{name}.npy')
+macro_comms = np.load(f'Graphs/{name}/macro_comms.npy')
+micro_comms = np.load(f'Graphs/{name}/micro_comms.npy')
+pmi_vals = np.load(f'Predictions/{name}/pmi/values.npy')
+ac_vals = np.load(f'Predictions/{name}/ac/values.npy')
+Pi = np.load(f'Pis_{name}.npy')
 
 predictions = np.load(filename)
 predictions_ac = np.load(filename_ac)

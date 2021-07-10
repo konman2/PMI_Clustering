@@ -220,8 +220,8 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     return comp
 
 print('PMI')
-name = 'cora'
-file = 'Graphs/cora/network.pkl'
+name = 'wiki-fields'
+file = 'Graphs/wiki-fields/network.pkl'
 # name = 'airport'
 # file = 'Graphs/airport_ww/network.pkl'
 # comp = list(np.load('computed_airport.npy'))
