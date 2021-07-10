@@ -4,10 +4,12 @@ from tqdm import tqdm
 from sklearn.metrics import normalized_mutual_info_score,adjusted_rand_score,adjusted_mutual_info_score
 import matplotlib.pyplot as plt
 
-def add(filename,desc,taus,times,ax1,ax2,num=70,func=normalized_mutual_info_score):
+def add(filename,desc,taus,times,ax1,ax2,num=70,func=normalized_mutual_info_score,name='airport_ww'):
     predicted = np.load(filename)
-    macro_comms = np.load('Graphs/airport_ww/macro_comms.npy')
-    micro_comms = np.load('Graphs/airport_ww/micro_comms.npy')
+    if name == 'airport':
+        name= 'airport_ww'
+    macro_comms = np.load(f'Graphs/{name}/macro_comms.npy')
+    micro_comms = np.load(f'Graphs/{name}/micro_comms.npy')
     iterator = tqdm(range(1, taus+1))
     iterator.set_description(f'Computing NMI')
     micro_scores = []
@@ -51,15 +53,15 @@ def graph(name,taus):
     times = np.log10(times)
     times_oth = np.log10(times_oth)
     func = normalized_mutual_info_score
-    add(filename,'PMI',taus,times,ax1,ax2,num=taus,func=func)
-    add(filename_ac,'AC',taus,times,ax1,ax2,num=taus,func=func)
-    add(filename_lmepmi,'lmepmi',taus,times_oth,ax1,ax2,num=taus,func=func)
-    add(filename_mac,'mac',taus,times_oth,ax1,ax2,num=taus,func=func)
+    add(filename,'PMI',taus,times,ax1,ax2,num=taus,func=func,name=name)
+    add(filename_ac,'AC',taus,times,ax1,ax2,num=taus,func=func,name=name)
+    add(filename_lmepmi,'lmepmi',taus,times_oth,ax1,ax2,num=taus,func=func,name=name)
+    add(filename_mac,'mac',taus,times_oth,ax1,ax2,num=taus,func=func,name=name)
     ax1.legend()
     ax2.legend()
     plt.show()
 
-graph('airport',50)
+graph('entsoe',50)
 
 # #predicted = sio.loadmat(filename)['C']
 # predicted = np.load(filename)

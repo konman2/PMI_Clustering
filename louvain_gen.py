@@ -197,9 +197,9 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     
         final_cluster,pmi = find_clusters(Mcc,Mnn,Mcn,Mnc,P,Pi,PMI)
         final_pmis.append(pmi)
-        print(pmi)
         e = time.time()
         time_taken.append(e-s)
+        print("Time Taken", e-s)
         num_clusters.append(len(np.unique(final_cluster)))
         map_clust = {}
         mapped_clusters = []
@@ -220,8 +220,8 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     return comp
 
 print('PMI')
-name = 'entsoe'
-file = 'Graphs/entsoe/network.pkl'
+name = 'cora'
+file = 'Graphs/cora/network.pkl'
 # name = 'airport'
 # file = 'Graphs/airport_ww/network.pkl'
 # comp = list(np.load('computed_airport.npy'))
