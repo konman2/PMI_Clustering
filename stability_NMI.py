@@ -26,39 +26,40 @@ def add(filename,desc,taus,times,ax1,ax2,num=70,func=normalized_mutual_info_scor
     ax1.plot(times[:num],macro_scores[:num],label='{} (best is {:.5f} at time {:.5f})'.format(desc,macro_scores[best_mac],times[best_mac]))
     ax2.plot(times[:num],micro_scores[:num],label='{} (best is {:.5f} at time {:.5f})'.format(desc,micro_scores[best_mic],times[best_mic]))
 
-taus = 50
 
-# filename = f'stability_clustering_tau_1_{taus}_prediction.mat'
-filename = f'Predictions/airport/pmi/predicted_communities_{taus}.npy'
-filename_ac = f'Predictions/airport/ac/predicted_communities_{taus}.npy'
-
-filename_lmepmi = f'Predictions/airport/lmepmi/predicted_communities_{taus}.npy'
-filename_mac = f'Predictions/airport/mac/predicted_communities_{taus}.npy'
-
-times = np.load('Predictions/airport/pmi/times.npy')
-times_oth = np.load('Predictions/airport/lmepmi/times.npy')
-fig1,ax1 = plt.subplots()
-ax1.set_xlabel('Markov time log scale')
-ax1.set_ylabel('NMI')
-ax1.set_title('Airport Network Macro Communities')
-
-fig2,ax2 = plt.subplots()
-ax2.set_xlabel('Markov time log scale')
-ax2.set_ylabel('NMI')
-ax2.set_title('Airport Network Micro Communities')
-times = np.log10(times)
-times_oth = np.log10(times_oth)
-func = normalized_mutual_info_score
-add(filename,'PMI',taus,times,ax1,ax2,num=taus,func=func)
-add(filename_ac,'AC',taus,times,ax1,ax2,num=taus,func=func)
-add(filename_lmepmi,'lmepmi',taus,times_oth,ax1,ax2,num=taus,func=func)
-add(filename_mac,'mac',taus,times_oth,ax1,ax2,num=taus,func=func)
-ax1.legend()
-ax2.legend()
-plt.show()
 # exit()
+def graph(name,taus):
 
+    # filename = f'stability_clustering_tau_1_{taus}_prediction.mat'
+    filename = f'Predictions/{name}/pmi/predicted_communities_{taus}.npy'
+    filename_ac = f'Predictions/{name}/ac/predicted_communities_{taus}.npy'
 
+    filename_lmepmi = f'Predictions/{name}/lmepmi/predicted_communities_{taus}.npy'
+    filename_mac = f'Predictions/{name}/mac/predicted_communities_{taus}.npy'
+
+    times = np.load(f'Predictions/{name}/pmi/times.npy')
+    times_oth = np.load(f'Predictions/{name}/lmepmi/times.npy')
+    fig1,ax1 = plt.subplots()
+    ax1.set_xlabel('Markov time log scale')
+    ax1.set_ylabel('NMI')
+    ax1.set_title('Airport Network Macro Communities')
+
+    fig2,ax2 = plt.subplots()
+    ax2.set_xlabel('Markov time log scale')
+    ax2.set_ylabel('NMI')
+    ax2.set_title('Airport Network Micro Communities')
+    times = np.log10(times)
+    times_oth = np.log10(times_oth)
+    func = normalized_mutual_info_score
+    add(filename,'PMI',taus,times,ax1,ax2,num=taus,func=func)
+    add(filename_ac,'AC',taus,times,ax1,ax2,num=taus,func=func)
+    add(filename_lmepmi,'lmepmi',taus,times_oth,ax1,ax2,num=taus,func=func)
+    add(filename_mac,'mac',taus,times_oth,ax1,ax2,num=taus,func=func)
+    ax1.legend()
+    ax2.legend()
+    plt.show()
+
+graph('airport',50)
 
 # #predicted = sio.loadmat(filename)['C']
 # predicted = np.load(filename)

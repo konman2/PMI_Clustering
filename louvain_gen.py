@@ -131,8 +131,8 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     # D= np.diag(1 / f.degree_vector(G))
     # A = f.adjacency_matrix(G)
     #P = np.asarray(np.matmul(D, A))
-    #P = f.pagerank_transition_matrix(G)
-    P = f.standard_random_walk_transition_matrix(G)
+    P = f.pagerank_transition_matrix(G,mu=0.001)
+    #P = f.standard_random_walk_transition_matrix(G)
     Pi = d/(np.sum(d))
     #print(Pi)
     np.save('Pis_{}'.format(name),Pi) 
@@ -161,13 +161,13 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
         s = time.time()
         #P = sp.linalg.expm((P_orig-np.eye(P_orig.shape[0]))*t)
         if precomp == None:
-            print(P_orig.dtype)
+            #print(P_orig.dtype)
             e_mat = sp.linalg.expm((P_orig-np.eye(P_orig.shape[0]))*t)
            
             #test = sp.linalg.expm((P_orig-np.eye(P_orig.shape[0])))
-            print(np.min(e_mat[np.nonzero(e_mat)]))
-            print(e_mat.dtype)
-            print(np.argwhere(e_mat==0))
+            #print(np.min(e_mat[np.nonzero(e_mat)]))
+            # print(e_mat.dtype)
+            #print(np.argwhere(e_mat==0))
             comp.append(e_mat)
         else:
             e_mat = precomp[iters]
@@ -220,10 +220,10 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     return comp
 
 print('PMI')
-# name = 'entsoe'
-# file = 'Graphs/entsoe/network.pkl'
-name = 'airport'
-file = 'Graphs/airport_ww/network.pkl'
+name = 'entsoe'
+file = 'Graphs/entsoe/network.pkl'
+# name = 'airport'
+# file = 'Graphs/airport_ww/network.pkl'
 # comp = list(np.load('computed_airport.npy'))
 comp = run('p',file=file,name=name,times='micro',precomp=None)
 np.save('computed_{}'.format(name),comp)

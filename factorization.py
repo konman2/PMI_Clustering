@@ -54,8 +54,10 @@ def pagerank_transition_matrix(G, mu=0.15):
     :param mu: teleportation probability.
     :return: PageRank transition matrix.
     """
-
-    d = out_degree_vector(G).astype(float)
+    if nx.is_directed(G):
+        d = out_degree_vector(G).astype(float)
+    else:
+        d = degree_vector(G).astype(float)
     d_1 = np.divide(np.ones_like(d), d, out=np.zeros_like(d), where=d!=0)  # Set inverse of zero degree to zero.
     M_std = np.diag(d_1) @ adjacency_matrix(G)  # Standard random walk transition matrix.
 
