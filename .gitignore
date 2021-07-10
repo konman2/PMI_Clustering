@@ -5,4 +5,3 @@ project/*
 *.ipynb*
 *.png
 .vscode/*
-Predictions/*
