@@ -4,6 +4,7 @@ project/*
 *.ipynb*
 *.png
 .vscode/*
+computed_*.npy
 computed.npy
 computed_airport.npy
 .DS_Store
