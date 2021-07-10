@@ -1,0 +1,5 @@
+ID	Title	Nodes	Edges	CC	Path	Conductance
+1	Fields_of_mathematics	2261	15305	0.3783030212543185	-1	0.0
+2	Branches_of_biology	4331	46974	0.40152810837857467	-1	0.0
+3	Subfields_of_physics	2425	27387	0.42915936264190585	-1	0.0
+4	Areas_of_computer_science	1730	7473	0.3919872783334252	-1	0.0
