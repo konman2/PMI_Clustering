@@ -1,8 +1,10 @@
 *.zip
-Graphs/*
-Graphs/*
+gadm36/*
 project/*
 *.ipynb*
 *.png
 .vscode/*
-Predictions/*
+computed.npy
+computed_airport.npy
+.DS_Store
+Graphs/snp500ll/*
