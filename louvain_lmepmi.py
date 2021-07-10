@@ -101,6 +101,7 @@ def find_clusters(Mcc,Mnn,Mcn,Mnc,P,Pi):
         hierch_clusters.append(next_clusters)
         count+=1
         print("Number of runs:", count)
+
         
     final_cluster = np.zeros(P.shape[0])
     for v in range(Mnn.shape[0]):
@@ -131,24 +132,35 @@ a = np.arange(10)+1
 y0 =[]
 y1= []
 y2 = []
-times = 10**np.linspace(-5,5,100)
+#times = np.linspace(1,50,50)
+times = 10**np.linspace(-2,2,50)
+#times = np.log(np.linspace(1,,50))
+# print(times)
+# print(10**np.linspace(-2,2,50))
+# exit()
 
+#times = np.arange(100)+1
 P_orig = np.copy(P)
 print(P)
 predictions = []
 time_taken = []
 num_clusters = []
+P = np.zeros(P_orig.shape)
+#P_expm = sp.linalg.expm((P_orig-np.eye(P_orig.shape[0])))
+# for iters,t in enumerate(times):
+#     test = sp.linalg.expm((P_orig-np.eye(P_orig.shape[0]))*t)
+
 for iters,t in enumerate(times):
     print("Run:",iters+1,"Markov Time:",t)
     s = time.time()
-    P = sp.linalg.expm((P_orig-np.eye(P_orig.shape[0]))*t)
+    P += sp.linalg.expm((P_orig-np.eye(P_orig.shape[0]))*t)
 
     PMI = np.sum(np.log(Pi*P.diagonal()))-np.sum(np.log(Pi**2))
 
     #print("INITIIAL:",PMI)
 
     next_PMI = -1
-    Mnn = np.log(P)-np.log(Pi)
+    Mnn = np.log(P/(iters+1))-np.log(Pi)
     Mcc = np.copy(Mnn)
     Mcn = np.copy(Mnn)
     Mnc = np.copy(Mnn)
@@ -166,11 +178,11 @@ for iters,t in enumerate(times):
             count+=1
         mapped_clusters.append(map_clust[i])
     predictions.append(mapped_clusters)
-    np.save('Predictions/pmi/predicted_communities_{}'.format((iters+1)),np.array(predictions).T)
+    np.save('Predictions/lmepmi/predicted_communities_macro{}'.format((iters+1)),np.array(predictions).T)
 #print(mapped_clusters)
-np.save('Predictions/pmi/predicted_communities_{}'.format(len(times)),np.array(predictions).T)
-np.save('Predictions/pmi/times',times)
-np.save('Predictions/pmi/time_taken',np.array(time_taken))
-np.save('Predictions/pmi/num_clusters',np.array(num_clusters))
+np.save('Predictions/lmepmi/predicted_communities_macro{}'.format(len(times)),np.array(predictions).T)
+np.save('Predictions/lmepmi/times_macro',times)
+np.save('Predictions/lmepmi/time_taken',np.array(time_taken))
+np.save('Predictions/lmepmi/num_clusters_macro',np.array(num_clusters))
 
 
