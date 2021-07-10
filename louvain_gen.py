@@ -135,7 +135,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     P = f.standard_random_walk_transition_matrix(G)
     Pi = d/(np.sum(d))
     #print(Pi)
- 
+    np.save('Pis_{}'.format(name),Pi) 
     a = np.arange(10)+1
     y0 =[]
     y1= []
@@ -222,17 +222,17 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
 print('PMI')
 # name = 'entsoe'
 # file = 'Graphs/entsoe/network.pkl'
-# name = 'airport'
-# file = 'Graphs/airport_ww/network.pkl'
-comp = list(np.load('computed_airport.npy'))
-run('p',file=file,name=name,times='micro',precomp=None)
-# np.save('computed_{}'.format(name),comp)
-# print()
-# print('LMEPMI')
-# run('lp',file=file,name=name,times='micro',precomp=comp)
-# print()
-# print('AC')
-#run('ac',file=file,name=name,times='micro',precomp=comp)
-# print()
-# print('MAC')
-# run('ma',file=file,name=name,times='micro',precomp = comp)
+name = 'airport'
+file = 'Graphs/airport_ww/network.pkl'
+# comp = list(np.load('computed_airport.npy'))
+comp = run('p',file=file,name=name,times='micro',precomp=None)
+np.save('computed_{}'.format(name),comp)
+print()
+print('LMEPMI')
+run('lp',file=file,name=name,times='micro',precomp=comp)
+print()
+print('AC')
+run('ac',file=file,name=name,times='micro',precomp=comp)
+print()
+print('MAC')
+run('ma',file=file,name=name,times='micro',precomp = comp)
