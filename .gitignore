@@ -3,6 +3,7 @@ gadm36/*
 project/*
 *.ipynb*
 *.png
+!fig/*.png
 .vscode/*
 computed_*.npy
 computed.npy

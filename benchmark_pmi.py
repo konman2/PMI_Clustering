@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-name = 'entsoe'
+name = 'airport'
 taus = 50
 filename = f'Predictions/{name}/pmi/predicted_communities_{taus}.npy'
 filename_ac = f'Predictions/{name}/ac/predicted_communities_{taus}.npy'
@@ -10,11 +10,15 @@ filename_mac = f'Predictions/{name}/mac/predicted_communities_{taus}.npy'
 
 times = np.load(f'Predictions/{name}/pmi/times.npy')
 matr = np.load(f'computed_{name}.npy')
-macro_comms = np.load(f'Graphs/{name}/macro_comms.npy')
-micro_comms = np.load(f'Graphs/{name}/micro_comms.npy')
 pmi_vals = np.load(f'Predictions/{name}/pmi/values.npy')
 ac_vals = np.load(f'Predictions/{name}/ac/values.npy')
 Pi = np.load(f'Pis_{name}.npy')
+name2 = name
+if name == 'airport':
+    name2 = 'airport_ww'
+macro_comms = np.load(f'Graphs/{name2}/macro_comms.npy')
+micro_comms = np.load(f'Graphs/{name2}/micro_comms.npy')
+
 
 predictions = np.load(filename)
 predictions_ac = np.load(filename_ac)
@@ -59,10 +63,16 @@ pmis = calculate_pmi(matr,times,Pi,micro_comms)
 acs = calculate_ac(matr,times,Pi,micro_comms)
 print(acs)
 print(ac_vals)
+plt.title('PMI vs Markov Time for Ground Truth and predicted communities')
+plt.xlabel('Markov Time')
+plt.ylabel('PMI')
 plt.plot(np.log10(times),pmis,label='micro community')
 plt.plot(np.log10(times),pmi_vals,label='predicted community')
 plt.legend()
 plt.figure()
+plt.title('AC vs Markov Time for Ground Truth and predicted communities')
+plt.xlabel('Markov Time')
+plt.ylabel('AC')
 plt.plot(np.log10(times),acs,label='micro community')
 plt.plot(np.log10(times),ac_vals,label='predicted community')
 plt.legend()

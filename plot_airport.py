@@ -88,12 +88,13 @@ data_geocoded_ac = data_geocoded.iloc[inds_ac]
 ax = gplt.polyplot(world,figsize=(8,5))
 ax2 = gplt.polyplot(world,figsize=(8,5))
 
-gplt.pointplot(data_geocoded_pmi, ax=ax,s=1,hue=[1 for i in inds],cmap='Set1')
+gplt.pointplot(data_geocoded_pmi, ax=ax,s=1,hue=[1 for i in inds],cmap='Set1',label='pmi mistakes')
 
-gplt.pointplot(data_geocoded_ac, ax=ax,s=1,hue=[2 for i in inds_ac],cmap='tab10',alpha=0.5)
+gplt.pointplot(data_geocoded_ac, ax=ax,s=1,hue=[2 for i in inds_ac],cmap='tab10',alpha=0.5,label='ac mistakes')
 
 #gplt.pointplot(data_geocoded, ax=ax,s=1,hue=colors_micro_ac)
 
 #gplt.pointplot([p])
+plt.legend()
 plt.show()
 print(len(lat))

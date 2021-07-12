@@ -60,8 +60,8 @@ best_val = np.zeros(len(comm_labels))
 # best_val2 = np.zeros(len(comm_labels))     
 for it,t in enumerate(times):
     P = matr[it]
-    #R = ((P-Pi).T*Pi).T
-    R = np.log(P)-np.log(Pi)
+    R = ((P-Pi).T*Pi).T
+    #R = np.log(P)-np.log(Pi)
     for ind,h in enumerate(comms):
         val =  (h.T@R@h)
         #c = comms_inc[ind]

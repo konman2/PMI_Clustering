@@ -44,12 +44,12 @@ def graph(name,taus):
     fig1,ax1 = plt.subplots()
     ax1.set_xlabel('Markov time log scale')
     ax1.set_ylabel('NMI')
-    ax1.set_title('Airport Network Macro Communities')
+    ax1.set_title(f'{name} Network Macro Communities')
 
     fig2,ax2 = plt.subplots()
     ax2.set_xlabel('Markov time log scale')
     ax2.set_ylabel('NMI')
-    ax2.set_title('Airport Network Micro Communities')
+    ax2.set_title(f'{name} Network Micro Communities')
     times = np.log10(times)
     times_oth = np.log10(times_oth)
     func = normalized_mutual_info_score
@@ -61,7 +61,7 @@ def graph(name,taus):
     ax2.legend()
     plt.show()
 
-graph('entsoe',50)
+graph('airport',50)
 
 # #predicted = sio.loadmat(filename)['C']
 # predicted = np.load(filename)
