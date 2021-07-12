@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-name = 'airport'
+name = 'entsoe'
 taus = 50
 filename = f'Predictions/{name}/pmi/predicted_communities_{taus}.npy'
 filename_ac = f'Predictions/{name}/ac/predicted_communities_{taus}.npy'
