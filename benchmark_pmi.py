@@ -36,6 +36,7 @@ def calculate_pmi(matr,times,Pi,pred):
         vals.append(pmi)
         #print(pmi,vals[it])
         #print(micro_pmi)
+        print(it,pmi)
     return np.array(vals)
 def calculate_ac(matr,times,Pi,pred):
     vals = []
@@ -52,6 +53,7 @@ def calculate_ac(matr,times,Pi,pred):
         #print(ac,ac_vals[it])
         #print(pmi,vals[it])
         #print(micro_pmi)
+        print(ac,it)
     return np.array(vals)
 
 #calculate_ac(matr,times,Pi,predictions_ac)
@@ -69,6 +71,7 @@ plt.ylabel('PMI')
 plt.plot(np.log10(times),pmis,label='micro community')
 plt.plot(np.log10(times),pmi_vals,label='predicted community')
 plt.legend()
+plt.savefig(f'fig/PMI_{name}_gt')
 plt.figure()
 plt.title('AC vs Markov Time for Ground Truth and predicted communities')
 plt.xlabel('Markov Time')
@@ -76,7 +79,8 @@ plt.ylabel('AC')
 plt.plot(np.log10(times),acs,label='micro community')
 plt.plot(np.log10(times),ac_vals,label='predicted community')
 plt.legend()
-plt.show()
+plt.savefig(f'fig/ac_{name}_gt')
+#plt.show()
 
 
 
