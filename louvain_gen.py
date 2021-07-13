@@ -124,19 +124,19 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     #print(f.degree_vector(G).shape)
     #print(G.nodes)
 
-
+    sigma = 1e-32
     d = f.degree_vector(G)
     vert = np.arange(len(d))
     #print(d)
     # D= np.diag(1 / f.degree_vector(G))
     # A = f.adjacency_matrix(G)
     #P = np.asarray(np.matmul(D, A))
-    P = f.pagerank_transition_matrix(G,mu=0.1)
-    print(np.nonzero(P==0))
-    #P = f.standard_random_walk_transition_matrix(G)
-    #Pi = d/(np.sum(d))
-    pi = f.stationary_distribution(P)
-    Pi = np.diag(pi)
+    #P = f.pagerank_transition_matrix(G,mu=0.1)
+    #print(np.nonzero(P==0))
+    P = f.standard_random_walk_transition_matrix(G)
+    Pi = d/(np.sum(d))
+    #pi = f.stationary_distribution(P)
+    #Pi = np.diag(pi)
     #print(Pi)
     np.save('Pis_{}'.format(name),Pi) 
     a = np.arange(10)+1
@@ -185,7 +185,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
         if flag == 'ac' or flag == 'ma':
             PMI = np.sum((Pi*P.diagonal()))-np.sum((Pi**2))
         else:
-            PMI = np.sum(np.log(Pi*P.diagonal()))-np.sum(np.log(Pi**2))
+            PMI = np.sum(np.log((Pi*P.diagonal())+sigma))-np.sum(np.log((Pi**2)+sigma))
         #print("INITIIAL:",PMI)
 
         next_PMI = -1
@@ -193,7 +193,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
         if flag == 'ac' or flag == 'ma':
             Mnn = ((P-Pi).T*Pi).T
         else:
-            Mnn = np.log(P)-np.log(Pi)
+            Mnn = np.log(P+sigma)-np.log(Pi+sigma)
         Mcc = np.copy(Mnn)
         Mcn = np.copy(Mnn)
         Mnc = np.copy(Mnn)
