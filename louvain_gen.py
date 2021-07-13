@@ -143,7 +143,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     if times == 'macro' and (flag == 'lp' or flag == 'ma'):
         times == np.linspace(1,50,50)
     else:
-        times = 10**np.linspace(-2,2.5,50)
+        times = 10**np.linspace(-1,3.5,50)
     
     
     P_orig = np.copy(P)
