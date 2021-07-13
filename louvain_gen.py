@@ -131,7 +131,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     # D= np.diag(1 / f.degree_vector(G))
     # A = f.adjacency_matrix(G)
     #P = np.asarray(np.matmul(D, A))
-    P = f.pagerank_transition_matrix(G,mu=0.01)
+    P = f.pagerank_transition_matrix(G,mu=0.1)
     print(np.nonzero(P==0))
     #P = f.standard_random_walk_transition_matrix(G)
     #Pi = d/(np.sum(d))
