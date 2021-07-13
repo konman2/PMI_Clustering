@@ -61,7 +61,7 @@ def graph(name,taus):
     ax2.legend()
     plt.show()
 
-graph('airport',50)
+graph('entsoe',50)
 
 # #predicted = sio.loadmat(filename)['C']
 # predicted = np.load(filename)
