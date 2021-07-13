@@ -132,6 +132,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     # A = f.adjacency_matrix(G)
     #P = np.asarray(np.matmul(D, A))
     P = f.pagerank_transition_matrix(G,mu=0.01)
+    print(np.nonzero(P==0))
     #P = f.standard_random_walk_transition_matrix(G)
     #Pi = d/(np.sum(d))
     pi = f.stationary_distribution(P)
