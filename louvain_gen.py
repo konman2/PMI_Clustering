@@ -124,7 +124,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     #print(f.degree_vector(G).shape)
     #print(G.nodes)
 
-    sigma = 1e-32
+    sigma = 0
     d = f.degree_vector(G)
     vert = np.arange(len(d))
     #print(d)
@@ -144,9 +144,9 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     y1= []
     y2 = []
     if times == 'macro' and (flag == 'lp' or flag == 'ma'):
-        times == np.linspace(1,50,50)
+        times = 10**np.linspace(0.7,1.5,50)
     else:
-        times = 10**np.linspace(-1,3.5,50)
+        times = 10**np.linspace(-2,2,50)
     
     
     P_orig = np.copy(P)
@@ -213,7 +213,8 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
                 count+=1
             mapped_clusters.append(map_clust[i])
         predictions.append(mapped_clusters)
-        #np.save('Predictions/airport/pmi/predicted_communities_{}'.format((iters+1)),np.array(predictions).T)
+        np.save()
+        np.save('Predictions/{}/{}/predicted_communities_{}'.format(name,folder),np.array(mapped_clusters))
     #print(mapped_clusters)
     np.save('Predictions/{}/{}/predicted_communities_{}'.format(name,folder,len(times)),np.array(predictions).T)
     np.save('Predictions/{}/{}/times'.format(name,folder),times)
@@ -223,11 +224,14 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     return comp
 
 print('PMI')
-name = 'wiki-fields'
-file = 'Graphs/wiki-fields/network.pkl'
+# name = ''
+# file = 'Graphs/polblogs/network.pkl'
 # name = 'airport'
 # file = 'Graphs/airport_ww/network.pkl'
 # comp = list(np.load('computed_airport.npy'))
+name = 'wiki-fields'
+file = 'Graphs/wiki-fields/network.pkl'
+
 comp = run('p',file=file,name=name,times='micro',precomp=None)
 np.save('computed_{}'.format(name),comp)
 print('AC')
