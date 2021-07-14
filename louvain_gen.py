@@ -223,13 +223,13 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     return comp
 
 print('PMI')
-name = 'polblogs'
-file = 'Graphs/polblogs/network.pkl'
+# name = 'polblogs'
+# file = 'Graphs/polblogs/network.pkl'
 # name = 'airport'
 # file = 'Graphs/airport_ww/network.pkl'
 # comp = list(np.load('computed_airport.npy'))
-# name = 'wiki-fields'
-# file = 'Graphs/wiki-fields/network.pkl'
+name = 'wiki-fields'
+file = 'Graphs/wiki-fields/network.pkl'
 
 comp = run('p',file=file,name=name,times='micro',precomp=None)
 np.save('computed_{}'.format(name),comp)
