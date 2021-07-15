@@ -124,7 +124,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     #print(f.degree_vector(G).shape)
     #print(G.nodes)
 
-    sigma = 0
+    sigma = 1e-32
     d = f.degree_vector(G)
     vert = np.arange(len(d))
     #print(d)
