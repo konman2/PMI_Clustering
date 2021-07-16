@@ -22,7 +22,6 @@ def onestep(PMI,clusters,min_inc,Mcc,Mcn,Mnn,Mnc,Pi):
             PMI = next_PMI
         s = time.time()
         for v in range(Mnn.shape[0]):
-            #print("Node:"v)
             best=v
             best_inc = 0
             cv = clusters[v]
@@ -78,16 +77,10 @@ def find_clusters(Mcc,Mnn,Mcn,Mnc,P,Pi,PMI):
     s = time.time()
     increased,n_Mnn,n_Mcn,n_Mnc,n_clusters,PMI = onestep(PMI,clusters,0.0001,Mcc,Mcn,Mnn,Mnc,Pi)
     e =  time.time()
-    #print(e-s)
-    #print(n_clusters)
     uniq_vals,next_clusters = np.unique(n_clusters,return_inverse=True)
     next_Mnn = n_Mnn[uniq_vals][:,uniq_vals]
-    #print(next_clusters)
-    #print(PMI)
-    #exit()
     hierch_clusters.append(next_clusters)
     count = 1
-    #print(count)
     
     while increased:
         increased = False
@@ -164,22 +157,14 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
         s = time.time()
         #P = sp.linalg.expm((P_orig-np.eye(P_orig.shape[0]))*t)
         if precomp == None:
-            #print(P_orig.dtype)
             e_mat = sp.linalg.expm((P_orig-np.eye(P_orig.shape[0]))*t)
-           
-            #test = sp.linalg.expm((P_orig-np.eye(P_orig.shape[0])))
-            #print(np.min(e_mat[np.nonzero(e_mat)]))
-            # print(e_mat.dtype)
-            #print(np.argwhere(e_mat==0))
             comp.append(e_mat)
         else:
             e_mat = precomp[iters]
         if flag == 'lp' or flag == 'ma':
-            #P_cum+=sp.linalg.expm((P_orig-np.eye(P_orig.shape[0]))*t)
             P_cum += e_mat
             P = P_cum/(iters+1)
         else:
-            #P_cum = sp.linalg.expm((P_orig-np.eye(P_orig.shape[0]))*t)
             P_cum = e_mat
             P = P_cum
         if flag == 'ac' or flag == 'ma':
@@ -213,7 +198,8 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
                 count+=1
             mapped_clusters.append(map_clust[i])
         predictions.append(mapped_clusters)
-        np.save('Predictions/{}/{}/predicted_communities_{}'.format(name,folder,iters+1),np.array(mapped_clusters))
+        #np.save('Predictions/{}/{}/predicted_communities_{}'.format(name,folder,iters+1),np.array(mapped_clusters))
+        np.save(f'Predictions/{name}/mat/e_mat_{iters+1})',e_mat)
     #print(mapped_clusters)
     np.save('Predictions/{}/{}/predicted_communities_{}'.format(name,folder,len(times)),np.array(predictions).T)
     np.save('Predictions/{}/{}/times'.format(name,folder),times)
@@ -232,7 +218,12 @@ file = 'Graphs/cora/network.pkl'
 # comp = list(np.load('computed_airport.npy'))
 # name = 'wiki-fields'
 # file = 'Graphs/wiki-fields/network.pkl'
-
+##############################################
+# flag is first argument for runner function so for pmi flag is 'p'
+# times='macro' allows you to change averaging scheme for lmepmi and mac
+# SAVES: predictions in folder Predictions/{name}/pmi,Predictions/{name}/ac ... etc
+# SAVES: Intermediate matrix exponentials in Predictions/{name}
+#SAVES: Matrix exponential as comp_{name} in working directory.
 comp = run('p',file=file,name=name,times='micro',precomp=None)
 np.save('computed_{}'.format(name),comp)
 print('AC')
