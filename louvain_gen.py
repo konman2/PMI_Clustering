@@ -199,7 +199,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
             mapped_clusters.append(map_clust[i])
         predictions.append(mapped_clusters)
         #np.save('Predictions/{}/{}/predicted_communities_{}'.format(name,folder,iters+1),np.array(mapped_clusters))
-        np.save(f'Predictions/{name}/mat/e_mat_{iters+1})',e_mat)
+        np.save(f'Predictions/{name}/mat/e_mat_{iters+1}',e_mat)
     #print(mapped_clusters)
     np.save('Predictions/{}/{}/predicted_communities_{}'.format(name,folder,len(times)),np.array(predictions).T)
     np.save('Predictions/{}/{}/times'.format(name,folder),times)
