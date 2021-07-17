@@ -158,7 +158,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
         #P = sp.linalg.expm((P_orig-np.eye(P_orig.shape[0]))*t)
         if precomp == None:
             if iters+1 <= 46:
-                e_mat = np.load(f'Predictions/{name}/mat/e_mat_{iters+1}')
+                e_mat = np.load(f'Predictions/{name}/mat/e_mat_{iters+1}.npy')
             else:
                 e_mat = sp.linalg.expm((P_orig-np.eye(P_orig.shape[0]))*t)
             comp.append(e_mat)
