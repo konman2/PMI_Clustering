@@ -117,7 +117,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     #print(f.degree_vector(G).shape)
     #print(G.nodes)
 
-    sigma = 0
+    sigma = 1e-32
     d = f.degree_vector(G)
     vert = np.arange(len(d))
     #print(d)
@@ -140,8 +140,6 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
         times = 10**np.linspace(0.7,1.5,50)
     else:
         times = 10**np.linspace(-2,2,50)
-    
-    
     P_orig = np.copy(P)
     #P_orig = P_orig.astype('float128')
     #print(P)
