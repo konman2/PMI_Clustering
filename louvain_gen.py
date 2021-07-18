@@ -235,6 +235,7 @@ file = 'Graphs/cora/network.pkl'
 #SAVES: Matrix exponential as comp_{name} in working directory.
 # comp = run('p',file=file,name=name,times='micro',precomp=None)
 # np.save('computed_{}'.format(name),comp)
+comp = 'd'
 print('AC')
 run('ac',file=file,name=name,times='micro',precomp=comp)
 print()
