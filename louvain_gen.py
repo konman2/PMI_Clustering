@@ -155,7 +155,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
         s = time.time()
         #P = sp.linalg.expm((P_orig-np.eye(P_orig.shape[0]))*t)
         if precomp == None:
-            if iters+1 <= 49:
+            if iters+1 <= 50:
                 print("skip",iters+1)
                 p = np.load(f'Predictions/{name}/pmi/predicted_communities_{iters+1}.npy')
                 e_mat = np.load(f'Predictions/{name}/mat/e_mat_{iters+1}.npy')
@@ -166,7 +166,8 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
                 e_mat = sp.linalg.expm((P_orig-np.eye(P_orig.shape[0]))*t)
             comp.append(e_mat)
         else:
-            e_mat = precomp[iters]
+            #e_mat = precomp[iters]
+            e_mat = np.load(f'Predictions/{name}/mat/e_mat_{iters+1}.npy')
         if flag == 'lp' or flag == 'ma':
             P_cum += e_mat
             P = P_cum/(iters+1)
@@ -232,8 +233,8 @@ file = 'Graphs/cora/network.pkl'
 # SAVES: predictions in folder Predictions/{name}/pmi,Predictions/{name}/ac ... etc
 # SAVES: Intermediate matrix exponentials in Predictions/{name}
 #SAVES: Matrix exponential as comp_{name} in working directory.
-comp = run('p',file=file,name=name,times='micro',precomp=None)
-np.save('computed_{}'.format(name),comp)
+# comp = run('p',file=file,name=name,times='micro',precomp=None)
+# np.save('computed_{}'.format(name),comp)
 print('AC')
 run('ac',file=file,name=name,times='micro',precomp=comp)
 print()
