@@ -145,7 +145,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     if times == 'macro' and (flag == 'lp' or flag == 'ma'):
         times = 10**np.linspace(0.7,1.5,50)
     else:
-        times = 10**np.linspace(-3,3,100)
+        times = 10**np.linspace(-3,3,50)
     P_orig = np.copy(P)
     #P_orig = P_orig.astype('float128')
     #print(P)
@@ -228,8 +228,10 @@ print('PMI')
 # file = 'Graphs/cora/network.pkl'
 # name = 'LFR'
 # file = 'Graphs/LFR/network.pkl'
-name = 'airport'
-file = 'Graphs/airport_ww/network.pkl'
+name = 'entsoe'
+file = 'Graphs/entsoe/network.pkl'
+# name = 'airport'
+# file = 'Graphs/airport_ww/network.pkl'
 # comp = list(np.load('computed_airport.npy'))
 # name = 'wiki-fields'
 # file = 'Graphs/wiki-fields/network.pkl'
