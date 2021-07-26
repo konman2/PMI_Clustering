@@ -241,7 +241,7 @@ file = 'Graphs/entsoe/network.pkl'
 # SAVES: predictions in folder Predictions/{name}/pmi,Predictions/{name}/ac ... etc
 # SAVES: Intermediate matrix exponentials in Predictions/{name}
 #SAVES: Matrix exponential as comp_{name} in working directory.
-comp = list(np.load(f'computed_{name}'))
+comp = list(np.load(f'computed_{name}.npy'))
 run('p',file=file,name=name,times='micro',precomp=comp)
 #np.save('computed_{}'.format(name),comp)
 #comp = 'd'
