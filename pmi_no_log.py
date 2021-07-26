@@ -141,7 +141,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     if times == 'macro' and (flag == 'lp' or flag == 'ma'):
         times = 10**np.linspace(0.7,1.5,50)
     else:
-        times = 10**np.linspace(-3,3,50)
+        times = 10**np.linspace(-3,3,100)
     P_orig = np.copy(P)
     #P_orig = P_orig.astype('float128')
     #print(P)
@@ -179,7 +179,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
         if flag == 'ac' or flag == 'ma':
             PMI = np.sum((Pi*P.diagonal()))-np.sum((Pi**2))
         elif flag == 'p2':
-            PMI =  np.sum(P.diagonal()-np.sum(Pi))
+            PMI =  np.sum(P.diagonal())-np.sum(Pi)
         else:
             PMI = np.sum(np.log((Pi*P.diagonal())+sigma))-np.sum(np.log((Pi**2)+sigma))
         #print("INITIIAL:",PMI)
@@ -223,14 +223,14 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     return comp
 
 print('PMI')
-# name = 'polblogs'
-# file = 'Graphs/polblogs/network.pkl'
+name = 'polblogs'
+file = 'Graphs/polblogs/network.pkl'
 # name = 'cora'
 # file = 'Graphs/cora/network.pkl'
 # name = 'LFR'
 # file = 'Graphs/LFR/network.pkl'
-name = 'entsoe'
-file = 'Graphs/entsoe/network.pkl'
+# name = 'entsoe'
+# file = 'Graphs/entsoe/network.pkl'
 # comp = list(np.load('computed_airport.npy'))
 # name = 'wiki-fields'
 # file = 'Graphs/wiki-fields/network.pkl'
@@ -241,20 +241,20 @@ file = 'Graphs/entsoe/network.pkl'
 # SAVES: Intermediate matrix exponentials in Predictions/{name}
 #SAVES: Matrix exponential as comp_{name} in working directory.
 
-comp = run('p',file=file,name=name,times='micro',precomp=None)
-np.save('computed_{}'.format(name),comp)
-#comp = list(np.load('computed_{}.npy'.format(name)))
+#comp = run('p',file=file,name=name,times='micro',precomp=None)
+#np.save('computed_{}'.format(name),comp)
+comp = list(np.load('computed_{}.npy'.format(name)))
 print('NO LOG')
 #print(comp)
 run('p2',file=file,name=name,times='micro',precomp=comp)
-run('ac',file=file,name=name,times='micro',precomp=comp)
-#comp = 'd'
-print('AC')
-run('ac',file=file,name=name,times='micro',precomp=comp)
-print()
-print()
-print('LMEPMI')
-run('lp',file=file,name=name,times='micro',precomp=comp)
-print()
-print('MAC')
-run('ma',file=file,name=name,times='micro',precomp = comp)
+# run('ac',file=file,name=name,times='micro',precomp=comp)
+# #comp = 'd'
+# print('AC')
+# run('ac',file=file,name=name,times='micro',precomp=comp)
+# print()
+# print()
+# print('LMEPMI')
+# run('lp',file=file,name=name,times='micro',precomp=comp)
+# print()
+# print('MAC')
+# run('ma',file=file,name=name,times='micro',precomp = comp)

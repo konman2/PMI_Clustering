@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-name = 'entsoe'
-taus = 50
+name = 'LFR'
+taus = 100
 filename = f'Predictions/{name}/pmi/predicted_communities_{taus}.npy'
 filename_ac = f'Predictions/{name}/ac/predicted_communities_{taus}.npy'
 
@@ -85,7 +85,7 @@ plt.plot(np.log10(times),acs,label=f'micro community, best at {tgt_ac}')
 plt.plot(np.log10(times),ac_vals,label=f'predicted community, best at {tp_ac}')
 plt.legend()
 #plt.savefig(f'fig/ac_{name}_gt')
-#plt.show()
+plt.show()
 
 
 

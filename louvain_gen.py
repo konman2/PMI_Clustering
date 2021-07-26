@@ -117,7 +117,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     #print(f.degree_vector(G).shape)
     #print(G.nodes)
 
-    sigma = 1e-32
+    sigma = 0
     d = f.degree_vector(G)
     vert = np.arange(len(d))
     #print(d)
@@ -139,7 +139,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     if times == 'macro' and (flag == 'lp' or flag == 'ma'):
         times = 10**np.linspace(0.7,1.5,50)
     else:
-        times = 10**np.linspace(-2,2,50)
+        times = 10**np.linspace(-3,3,100)
     P_orig = np.copy(P)
     #P_orig = P_orig.astype('float128')
     #print(P)
@@ -155,7 +155,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
         s = time.time()
         #P = sp.linalg.expm((P_orig-np.eye(P_orig.shape[0]))*t)
         if precomp == None:
-            if iters+1 <= 50:
+            if iters+1 <= -1:
                 print("skip",iters+1)
                 p = np.load(f'Predictions/{name}/pmi/predicted_communities_{iters+1}.npy')
                 e_mat = np.load(f'Predictions/{name}/mat/e_mat_{iters+1}.npy')
@@ -166,8 +166,8 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
                 e_mat = sp.linalg.expm((P_orig-np.eye(P_orig.shape[0]))*t)
             comp.append(e_mat)
         else:
-            #e_mat = precomp[iters]
-            e_mat = np.load(f'Predictions/{name}/mat/e_mat_{iters+1}.npy')
+            e_mat = precomp[iters]
+            #e_mat = np.load(f'Predictions/{name}/mat/e_mat_{iters+1}.npy')
         if flag == 'lp' or flag == 'ma':
             P_cum += e_mat
             P = P_cum/(iters+1)
@@ -205,8 +205,8 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
                 count+=1
             mapped_clusters.append(map_clust[i])
         predictions.append(mapped_clusters)
-        np.save('Predictions/{}/{}/predicted_communities_{}'.format(name,folder,iters+1),np.array(mapped_clusters))
-        np.save(f'Predictions/{name}/mat/e_mat_{iters+1}',e_mat)
+        # np.save('Predictions/{}/{}/predicted_communities_{}'.format(name,folder,iters+1),np.array(mapped_clusters))
+        # np.save(f'Predictions/{name}/mat/e_mat_{iters+1}',e_mat)
     #print(mapped_clusters)
     np.save('Predictions/{}/{}/predicted_communities_{}'.format(name,folder,len(times)),np.array(predictions).T)
     np.save('Predictions/{}/{}/times'.format(name,folder),times)
@@ -218,12 +218,12 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
 print('PMI')
 # name = 'polblogs'
 # file = 'Graphs/polblogs/network.pkl'
-name = 'cora'
-file = 'Graphs/cora/network.pkl'
-# name = 'snp500-0.35'
-# file = 'Graphs/snp500ll/alpha=0.35/network.pkl'
-# name = 'airport'
-# file = 'Graphs/airport_ww/network.pkl'
+# name = 'cora'
+# file = 'Graphs/cora/network.pkl'
+# name = 'LFR'
+# file = 'Graphs/LFR/network.pkl'
+name = 'airport'
+file = 'Graphs/airport_ww/network.pkl'
 # comp = list(np.load('computed_airport.npy'))
 # name = 'wiki-fields'
 # file = 'Graphs/wiki-fields/network.pkl'
@@ -233,9 +233,10 @@ file = 'Graphs/cora/network.pkl'
 # SAVES: predictions in folder Predictions/{name}/pmi,Predictions/{name}/ac ... etc
 # SAVES: Intermediate matrix exponentials in Predictions/{name}
 #SAVES: Matrix exponential as comp_{name} in working directory.
-# comp = run('p',file=file,name=name,times='micro',precomp=None)
-# np.save('computed_{}'.format(name),comp)
-comp = 'd'
+comp = run('p',file=file,name=name,times='micro',precomp=None)
+np.save('computed_{}'.format(name),comp)
+
+#comp = 'd'
 print('AC')
 run('ac',file=file,name=name,times='micro',precomp=comp)
 print()
