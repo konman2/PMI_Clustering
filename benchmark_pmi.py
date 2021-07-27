@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-name = 'LFR'
-taus = 100
+name = 'entsoe'
+taus = 50
 filename = f'Predictions/{name}/pmi/predicted_communities_{taus}.npy'
 filename_ac = f'Predictions/{name}/ac/predicted_communities_{taus}.npy'
 
@@ -58,34 +58,40 @@ def calculate_ac(matr,times,Pi,pred):
 
 #calculate_ac(matr,times,Pi,predictions_ac)
 #exit()
+single_comm = np.ones(micro_comms.shape)
 pmis = calculate_pmi(matr,times,Pi,micro_comms)
+pmis_macro = calculate_pmi(matr,times,Pi,macro_comms)
+#pmis_sing = calculate_pmi(matr,times,Pi,single_comm)
 # print(pmis)
 # print(pmi_vals)
 # exit()
-acs = calculate_ac(matr,times,Pi,micro_comms)
-print(acs)
-print(ac_vals)
-
+# acs = calculate_ac(matr,times,Pi,micro_comms)
+# print(acs)
+# print(ac_vals)
+tgt_mac = np.log10(times[np.argmax(pmis_macro)])
 tgt = np.log10(times[np.argmax(pmis)])
 tp = np.log10(times[np.argmax(pmi_vals)])
-tgt_ac = np.log10(times[np.argmax(acs)])
-tp_ac = np.log10(times[np.argmax(ac_vals)])
+#tgt_s = np.log10(times[np.argmax(pmis_sing)])
+# tgt_ac = np.log10(times[np.argmax(acs)])
+# tp_ac = np.log10(times[np.argmax(ac_vals)])
 plt.title('PMI vs Markov Time for Ground Truth and predicted communities')
 plt.xlabel('Markov Time')
 plt.ylabel('PMI')
 plt.plot(np.log10(times),pmis,label=f'micro community, best at {tgt}')
 plt.plot(np.log10(times),pmi_vals,label=f'predicted community, best at {tp}')
+plt.plot(np.log10(times),pmis_macro,label=f'macro community, best at {tgt}')
+#plt.plot(np.log10(times),pmis_sing,label=f'macro community, best at {tgt_s}')
 plt.legend()
-#plt.savefig(f'fig/PMI_{name}_gt')
-plt.figure()
-plt.title('AC vs Markov Time for Ground Truth and predicted communities')
-plt.xlabel('Markov Time')
-plt.ylabel('AC')
-plt.plot(np.log10(times),acs,label=f'micro community, best at {tgt_ac}')
-plt.plot(np.log10(times),ac_vals,label=f'predicted community, best at {tp_ac}')
-plt.legend()
+plt.savefig(f'fig/PMI_{name}_gt')
+# plt.figure()
+# plt.title('AC vs Markov Time for Ground Truth and predicted communities')
+# plt.xlabel('Markov Time')
+# plt.ylabel('AC')
+# plt.plot(np.log10(times),acs,label=f'micro community, best at {tgt_ac}')
+# plt.plot(np.log10(times),ac_vals,label=f'predicted community, best at {tp_ac}')
+# plt.legend()
 #plt.savefig(f'fig/ac_{name}_gt')
-plt.show()
+#plt.show()
 
 
 
