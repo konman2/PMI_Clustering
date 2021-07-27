@@ -23,11 +23,12 @@ micro_comms = np.load(f'Graphs/{name2}/micro_comms.npy')
 predictions = np.load(filename)
 predictions_ac = np.load(filename_ac)
 def calculate_pmi(matr,times,Pi,pred):
+    sigma = 1e-32
     vals = []
     for it,t in enumerate(times):
         P = matr[it]
         #pred = predictions[:,it]
-        Mnn = np.log(P)-np.log(Pi)
+        Mnn = np.log(P+sigma)-np.log(Pi+sigma)
         #num_clusters = len(np.unique(micro_comms))
         pmi = 0
         for v in range(Mnn.shape[0]):
