@@ -187,7 +187,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
             Mnn = ((P-Pi).T*Pi).T
         else:
             Mnn = np.log(P+sigma)-np.log(Pi+sigma)
-        u,d,vt = svds(Mnn,k=100)
+        u,d,vt = svds(Mnn,k=50)
         Mnn = u@np.diag(d)@vt
         PMI = np.sum(np.diag(Mnn))
         Mcc = np.copy(Mnn)
@@ -226,13 +226,13 @@ print('PMI')
 # file = 'Graphs/cora/network.pkl'
 # name = 'LFR'
 # file = 'Graphs/LFR/network.pkl'
-# name = 'entsoe'
-# file = 'Graphs/entsoe/network.pkl'
+name = 'entsoe'
+file = 'Graphs/entsoe/network.pkl'
 # name = 'airport'
 # file = 'Graphs/airport_ww/network.pkl'
 # comp = list(np.load('computed_airport.npy'))
-name = 'wiki-fields'
-file = 'Graphs/wiki-fields/network.pkl'
+# name = 'wiki-fields'
+# file = 'Graphs/wiki-fields/network.pkl'
 ##############################################
 # flag is first argument for runner function so for pmi flag is 'p'
 # times='macro' allows you to change averaging scheme for lmepmi and mac
