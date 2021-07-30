@@ -7,6 +7,7 @@ import time
 import copy
 import sys
 from scipy.sparse.linalg import svds
+import os
 
 min_inc = 0.0001
 def onestep(PMI,clusters,min_inc,Mcc,Mcn,Mnn,Mnc,Pi):
@@ -103,7 +104,7 @@ def find_clusters(Mcc,Mnn,Mcn,Mnc,P,Pi,PMI):
             c = p[c]
         final_cluster[v] = c
     return (final_cluster,PMI)
-def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micro',precomp=None):
+def run(flag,k,file='Graphs/airport_ww/network.pkl',name='airport',times='micro',precomp=None):
     #G = nx.read_gpickle('Graphs/netsci/netsci_Gc.pkl')
     #G = nx.karate_club_graph()
     G = nx.read_gpickle(file)
@@ -212,11 +213,13 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
         # np.save('Predictions/{}/{}/predicted_communities_{}'.format(name,folder,iters+1),np.array(mapped_clusters))
         # np.save(f'Predictions/{name}/mat/e_mat_{iters+1}',e_mat)
     #print(mapped_clusters)
-    np.save('Predictions_stoch/{}/{}/predicted_communities_{}'.format(name,folder,len(times)),np.array(predictions).T)
+    if not os.path.isdir(f'Predictions_stoch/{name}/{folder}={k}'):
+        os.mkdir(f'Predictions_stoch/{name}/{folder}={k}')
+    np.save('Predictions_stoch/{}/{}={}/predicted_communities_{}'.format(name,folder,k,len(times)),np.array(predictions).T)
     np.save('Predictions_stoch/{}/{}/times'.format(name,folder),times)
-    np.save('Predictions_stoch/{}/{}/time_taken'.format(name,folder),np.array(time_taken))
-    np.save('Predictions_stoch/{}/{}/num_clusters'.format(name,folder),np.array(num_clusters))
-    np.save('Predictions_stoch/{}/{}/values'.format(name,folder),np.array(final_pmis))
+    np.save('Predictions_stoch/{}/{}={}/time_taken'.format(name,folder,k),np.array(time_taken))
+    np.save('Predictions_stoch/{}/{}={}/num_clusters'.format(name,folder,k),np.array(num_clusters))
+    np.save('Predictions_stoch/{}/{}={}/values'.format(name,folder,k),np.array(final_pmis))
     return comp
 
 print('PMI')
@@ -228,25 +231,30 @@ print('PMI')
 # file = 'Graphs/LFR/network.pkl'
 # name = 'entsoe'
 # file = 'Graphs/entsoe/network.pkl'
-# name = 'airport'
-# file = 'Graphs/airport_ww/network.pkl'
+name = 'airport'
+file = 'Graphs/airport_ww/network.pkl'
 # comp = list(np.load('computed_airport.npy'))
-name = 'wiki-fields'
-file = 'Graphs/wiki-fields/network.pkl'
+# name = 'wiki-fields'
+# file = 'Graphs/wiki-fields/network.pkl'
 ##############################################
 # flag is first argument for runner function so for pmi flag is 'p'
 # times='macro' allows you to change averaging scheme for lmepmi and mac
 # SAVES: predictions in folder Predictions/{name}/pmi,Predictions/{name}/ac ... etc
 # SAVES: Intermediate matrix exponentials in Predictions/{name}
 #SAVES: Matrix exponential as comp_{name} in working directory.
-comp = list(np.load(f'computed_{name}.npy'))
-run('p',file=file,name=name,times='micro',precomp=comp)
-#np.save('computed_{}'.format(name),comp)
-#comp = 'd'
-print('AC')
-run('ac',file=file,name=name,times='micro',precomp=comp)
-print()
-print()
+graphs = [('airport','Graphs/airport_ww/network.pkl'),('wiki-fields','Graphs/wiki-fields/network.pkl'),('entsoe,Graphs/entsoe/network.pkl')]
+for tup in graphs:
+    name,file = tup
+    comp = list(np.load(f'computed_{name}.npy'))
+    for k in range(25,150,25):
+        print("dimensions:", k)
+        run('p',k,file=file,name=name,times='micro',precomp=comp)
+        #np.save('computed_{}'.format(name),comp)
+        #comp = 'd'
+        print('AC')
+        run('ac',k,file=file,name=name,times='micro',precomp=comp)
+        print()
+        print()
 # print('LMEPMI')
 # run('lp',file=file,name=name,times='micro',precomp=comp)
 # print()
