@@ -242,7 +242,7 @@ file = 'Graphs/airport_ww/network.pkl'
 # SAVES: predictions in folder Predictions/{name}/pmi,Predictions/{name}/ac ... etc
 # SAVES: Intermediate matrix exponentials in Predictions/{name}
 #SAVES: Matrix exponential as comp_{name} in working directory.
-graphs = [('airport','Graphs/airport_ww/network.pkl'),('wiki-fields','Graphs/wiki-fields/network.pkl'),('entsoe,Graphs/entsoe/network.pkl')]
+graphs = [('entsoe','Graphs/entsoe/network.pkl')]
 for tup in graphs:
     name,file = tup
     comp = list(np.load(f'computed_{name}.npy'))
