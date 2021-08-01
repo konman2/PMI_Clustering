@@ -188,7 +188,7 @@ def run(flag,k,file='Graphs/airport_ww/network.pkl',name='airport',times='micro'
             Mnn = ((P-Pi).T*Pi).T
         else:
             Mnn = np.log(P+sigma)-np.log(Pi+sigma)
-        u,d,vt = svds(Mnn,k=50)
+        u,d,vt = svds(Mnn,k=k)
         Mnn = u@np.diag(d)@vt
         PMI = np.sum(np.diag(Mnn))
         Mcc = np.copy(Mnn)
@@ -242,7 +242,7 @@ file = 'Graphs/airport_ww/network.pkl'
 # SAVES: predictions in folder Predictions/{name}/pmi,Predictions/{name}/ac ... etc
 # SAVES: Intermediate matrix exponentials in Predictions/{name}
 #SAVES: Matrix exponential as comp_{name} in working directory.
-graphs = [('entsoe','Graphs/entsoe/network.pkl')]
+graphs = [('airport','Graphs/airport_ww/network.pkl'),('entsoe','Graphs/entsoe/network.pkl'),('wiki-fields','Graphs/wiki-fields/network.pkl')]
 for tup in graphs:
     name,file = tup
     comp = list(np.load(f'computed_{name}.npy'))
