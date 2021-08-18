@@ -104,7 +104,7 @@ def find_clusters(Mcc,Mnn,Mcn,Mnc,P,Pi,PMI):
             c = p[c]
         final_cluster[v] = c
     return (final_cluster,PMI)
-def run(flag,k,file='Graphs/airport_ww/network.pkl',name='airport',times='micro',precomp=None):
+def run(flag,file='Graphs/airport_ww/network.pkl',name='airport',times='micro',precomp=None):
     #G = nx.read_gpickle('Graphs/netsci/netsci_Gc.pkl')
     #G = nx.karate_club_graph()
     G = nx.read_gpickle(file)
@@ -119,7 +119,7 @@ def run(flag,k,file='Graphs/airport_ww/network.pkl',name='airport',times='micro'
     #print(f.degree_vector(G).shape)
     #print(G.nodes)
 
-    sigma = 1e-32
+    sigma = 0
     d = f.degree_vector(G)
     vert = np.arange(len(d))
     #print(d)
@@ -188,8 +188,7 @@ def run(flag,k,file='Graphs/airport_ww/network.pkl',name='airport',times='micro'
             Mnn = ((P-Pi).T*Pi).T
         else:
             Mnn = np.log(P+sigma)-np.log(Pi+sigma)
-        u,d,vt = svds(Mnn,k=k)
-        Mnn = u@np.diag(d)@vt
+            Mnn = np.tanh(Mnn)
         PMI = np.sum(np.diag(Mnn))
         Mcc = np.copy(Mnn)
         Mcn = np.copy(Mnn)
@@ -213,13 +212,13 @@ def run(flag,k,file='Graphs/airport_ww/network.pkl',name='airport',times='micro'
         # np.save('Predictions/{}/{}/predicted_communities_{}'.format(name,folder,iters+1),np.array(mapped_clusters))
         # np.save(f'Predictions/{name}/mat/e_mat_{iters+1}',e_mat)
     #print(mapped_clusters)
-    if not os.path.isdir(f'Predictions_stoch/{name}/{folder}={k}'):
-        os.mkdir(f'Predictions_stoch/{name}/{folder}={k}')
-    np.save('Predictions_stoch/{}/{}={}/predicted_communities_{}'.format(name,folder,k,len(times)),np.array(predictions).T)
+    if not os.path.isdir(f'Predictions_stoch/{name}'):
+        os.mkdir(f'Predictions_stoch/{name}')
+    np.save('Predictions_stoch/{}/{}/predicted_communities_{}'.format(name,folder,len(times)),np.array(predictions).T)
     np.save('Predictions_stoch/{}/{}/times'.format(name,folder),times)
-    np.save('Predictions_stoch/{}/{}={}/time_taken'.format(name,folder,k),np.array(time_taken))
-    np.save('Predictions_stoch/{}/{}={}/num_clusters'.format(name,folder,k),np.array(num_clusters))
-    np.save('Predictions_stoch/{}/{}={}/values'.format(name,folder,k),np.array(final_pmis))
+    np.save('Predictions_stoch/{}/{}/time_taken'.format(name,folder),np.array(time_taken))
+    np.save('Predictions_stoch/{}/{}/num_clusters'.format(name,folder),np.array(num_clusters))
+    np.save('Predictions_stoch/{}/{}/values'.format(name,folder),np.array(final_pmis))
     return comp
 
 print('PMI')
@@ -242,19 +241,20 @@ file = 'Graphs/airport_ww/network.pkl'
 # SAVES: predictions in folder Predictions/{name}/pmi,Predictions/{name}/ac ... etc
 # SAVES: Intermediate matrix exponentials in Predictions/{name}
 #SAVES: Matrix exponential as comp_{name} in working directory.
-graphs = [('airport','Graphs/airport_ww/network.pkl'),('entsoe','Graphs/entsoe/network.pkl'),('wiki-fields','Graphs/wiki-fields/network.pkl')]
+graphs = [('polblogs','Graphs/polblogs/network.pkl')]
+#graphs = [(name,file)]
 for tup in graphs:
     name,file = tup
     comp = list(np.load(f'computed_{name}.npy'))
-    for k in range(25,150,25):
-        print("dimensions:", k)
-        run('p',k,file=file,name=name,times='micro',precomp=comp)
-        #np.save('computed_{}'.format(name),comp)
-        #comp = 'd'
-        print('AC')
-        run('ac',k,file=file,name=name,times='micro',precomp=comp)
-        print()
-        print()
+
+    #print("dimensions:", k)
+    run('p',file=file,name=name,times='micro',precomp=comp)
+    #np.save('computed_{}'.format(name),comp)
+    #comp = 'd'
+    print('AC')
+    run('ac',file=file,name=name,times='micro',precomp=comp)
+    print()
+    print()
 # print('LMEPMI')
 # run('lp',file=file,name=name,times='micro',precomp=comp)
 # print()
