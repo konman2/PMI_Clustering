@@ -241,7 +241,7 @@ file = 'Graphs/airport_ww/network.pkl'
 # SAVES: predictions in folder Predictions/{name}/pmi,Predictions/{name}/ac ... etc
 # SAVES: Intermediate matrix exponentials in Predictions/{name}
 #SAVES: Matrix exponential as comp_{name} in working directory.
-graphs = [('polblogs','Graphs/polblogs/network.pkl')]
+graphs = [('wiki-fields','Graphs/wiki-fields/network.pkl'),('entsoe','Graphs/entsoe/network.pkl')]
 #graphs = [(name,file)]
 for tup in graphs:
     name,file = tup
