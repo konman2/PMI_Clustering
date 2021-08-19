@@ -6,6 +6,7 @@ import scipy as sp
 import time
 import copy
 import sys
+import os
 
 min_inc = 0.0001
 def onestep(PMI,clusters,min_inc,Mcc,Mcn,Mnn,Mnc,Pi):
@@ -119,7 +120,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     #print(f.degree_vector(G).shape)
     #print(G.nodes)
 
-    sigma = 1e-32
+    sigma = 0
     d = f.degree_vector(G)
     vert = np.arange(len(d))
     #print(d)
@@ -141,7 +142,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     if times == 'macro' and (flag == 'lp' or flag == 'ma'):
         times = 10**np.linspace(0.7,1.5,50)
     else:
-        times = 10**np.linspace(-3,3,100)
+        times = 10**np.linspace(-3,3,50)
     P_orig = np.copy(P)
     #P_orig = P_orig.astype('float128')
     #print(P)
@@ -189,10 +190,11 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
         if flag == 'ac' or flag == 'ma':
             Mnn = ((P-Pi).T*Pi).T
         elif flag == 'p2':
-            Mnn = P-Pi
+            Mnn = P/Pi-1
             #print('here')
         else:
             Mnn = np.log(P+sigma)-np.log(Pi+sigma)
+        PMI = np.sum(np.diag(Mnn))
         Mcc = np.copy(Mnn)
         Mcn = np.copy(Mnn)
         Mnc = np.copy(Mnn)
@@ -215,6 +217,9 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
         # np.save('Predictions/{}/{}/predicted_communities_{}'.format(name,folder,iters+1),np.array(mapped_clusters))
         # np.save(f'Predictions/{name}/mat/e_mat_{iters+1}',e_mat)
     #print(mapped_clusters)
+    if not os.path.isdir(f'Predictions_stoch/{name}/{folder}'):
+        os.mkdir(f'Predictions_stoch/{name}/{folder}')
+    print('saved at','Predictions/{}/{}/predicted_communities_{}'.format(name,folder,len(times)))
     np.save('Predictions/{}/{}/predicted_communities_{}'.format(name,folder,len(times)),np.array(predictions).T)
     np.save('Predictions/{}/{}/times'.format(name,folder),times)
     np.save('Predictions/{}/{}/time_taken'.format(name,folder),np.array(time_taken))
@@ -223,8 +228,10 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     return comp
 
 print('PMI')
-name = 'polblogs'
-file = 'Graphs/polblogs/network.pkl'
+# name = 'polblogs'
+# file = 'Graphs/polblogs/network.pkl'
+# name = 'airport'
+# file = 'Graphs/airport_ww/network.pkl'
 # name = 'cora'
 # file = 'Graphs/cora/network.pkl'
 # name = 'LFR'
@@ -232,8 +239,8 @@ file = 'Graphs/polblogs/network.pkl'
 # name = 'entsoe'
 # file = 'Graphs/entsoe/network.pkl'
 # comp = list(np.load('computed_airport.npy'))
-# name = 'wiki-fields'
-# file = 'Graphs/wiki-fields/network.pkl'
+name = 'wiki-fields'
+file = 'Graphs/wiki-fields/network.pkl'
 ##############################################
 # flag is first argument for runner function so for pmi flag is 'p'
 # times='macro' allows you to change averaging scheme for lmepmi and mac
