@@ -6,6 +6,7 @@ import scipy as sp
 import time
 import copy
 import sys
+import os
 
 min_inc = 0.0001
 def onestep(PMI,clusters,min_inc,Mcc,Mcn,Mnn,Mnc,Pi):
@@ -139,7 +140,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     if times == 'macro' and (flag == 'lp' or flag == 'ma'):
         times = 10**np.linspace(0.7,1.5,50)
     else:
-        times = 10**np.linspace(-3,3,100)
+        times = 10**np.linspace(-3,3,50)
     P_orig = np.copy(P)
     #P_orig = P_orig.astype('float128')
     #print(P)
@@ -208,6 +209,10 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
         # np.save('Predictions/{}/{}/predicted_communities_{}'.format(name,folder,iters+1),np.array(mapped_clusters))
         # np.save(f'Predictions/{name}/mat/e_mat_{iters+1}',e_mat)
     #print(mapped_clusters)
+    if not os.path.isdir(f'Predictions/{name}'):
+        os.mkdir(f'Predictions/{name}')
+    if not os.path.isdir(f'Predictions/{name}/{folder}'):
+        os.mkdir(f'Predictions/{name}/{folder}')
     np.save('Predictions/{}/{}/predicted_communities_{}'.format(name,folder,len(times)),np.array(predictions).T)
     np.save('Predictions/{}/{}/times'.format(name,folder),times)
     np.save('Predictions/{}/{}/time_taken'.format(name,folder),np.array(time_taken))
@@ -222,11 +227,11 @@ print('PMI')
 # file = 'Graphs/cora/network.pkl'
 # name = 'LFR'
 # file = 'Graphs/LFR/network.pkl'
-name = 'airport'
-file = 'Graphs/airport_ww/network.pkl'
+# name = 'airport'
+# file = 'Graphs/airport_ww/network.pkl'
 # comp = list(np.load('computed_airport.npy'))
-# name = 'wiki-fields'
-# file = 'Graphs/wiki-fields/network.pkl'
+name = 'wiki-fields'
+file = 'Graphs/wiki-fields/network.pkl'
 ##############################################
 # flag is first argument for runner function so for pmi flag is 'p'
 # times='macro' allows you to change averaging scheme for lmepmi and mac
@@ -241,8 +246,8 @@ print('AC')
 run('ac',file=file,name=name,times='micro',precomp=comp)
 print()
 print()
-print('LMEPMI')
-run('lp',file=file,name=name,times='micro',precomp=comp)
-print()
-print('MAC')
-run('ma',file=file,name=name,times='micro',precomp = comp)
+# print('LMEPMI')
+# run('lp',file=file,name=name,times='micro',precomp=comp)
+# print()
+# print('MAC')
+# run('ma',file=file,name=name,times='micro',precomp = comp)
