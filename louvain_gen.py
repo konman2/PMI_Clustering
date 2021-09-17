@@ -230,8 +230,10 @@ print('PMI')
 # name = 'airport'
 # file = 'Graphs/airport_ww/network.pkl'
 # comp = list(np.load('computed_airport.npy'))
-name = 'wiki-fields'
-file = 'Graphs/wiki-fields/network.pkl'
+# name = 'wiki-fields'
+# file = 'Graphs/wiki-fields/network.pkl'
+name = 'entsoe'
+file = 'Graphs/entsoe/network.pkl'
 ##############################################
 # flag is first argument for runner function so for pmi flag is 'p'
 # times='macro' allows you to change averaging scheme for lmepmi and mac
