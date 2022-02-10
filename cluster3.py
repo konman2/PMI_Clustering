@@ -286,7 +286,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     #times = 10**np.linspace(-2,2,100)
 
     #times = np.linspace(10**(-3),10**3,2000)
-    times = np.linspace(10**(-2),10**3,200)
+    times = np.linspace(10**(-3),10**3,1000)
     P_orig = np.copy(P)
     #P_orig = P_orig.astype('float128')
     #print(P)
@@ -580,14 +580,14 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
 
 
 print('PMI')
-name = 'polblogs'
-file = 'Graphs/polblogs/network.pkl'
+# name = 'polblogs'
+# file = 'Graphs/polblogs/network.pkl'
 # name = 'cora'
 # file = 'Graphs/cora/network.pkl'
 # name = 'LFR'
 # file = 'Graphs/LFR/network.pkl'
-# name = 'airport'
-# file = 'Graphs/airport_ww/network.pkl'
+name = 'airport'
+file = 'Graphs/airport_ww/network.pkl'
 # comp = list(np.load('computed_airport.npy'))
 # name = 'wiki-fields'
 # file = 'Graphs/wiki-fields/network.pkl'
