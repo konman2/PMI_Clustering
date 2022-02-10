@@ -239,9 +239,18 @@ def arlei_graph():
 def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micro',precomp=None):
     #G = nx.read_gpickle('Graphs/netsci/netsci_Gc.pkl')
     #G = nx.karate_club_graph()
+    gt_micro = []
+    gt_macro = []
+    
+    if name == 'airport':
+        name = 'airport_ww'
+    gt_micro = np.load(f'Graphs/{name}/micro_comms.npy')
+    gt_macro = np.load(f'Graphs/{name}/macro_comms.npy')
+
+
     G = nx.read_gpickle(file)
-    gt = np.load(f'Graphs/{name}/micro_comms.npy')
-    assert len(gt) == len(G.nodes)
+    # gt = np.load(f'Graphs/{name}/micro_comms.npy')
+    # assert len(gt) == len(G.nodes)
 
     #G,gt,_ = arlei_graph()
     #print(gt)
@@ -513,8 +522,10 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     print(o)
     print(calc_pmi(comp,o))
     print(gt)
-    print(calc_pmi(comp,gt))
-    print(normalized_mutual_info_score(o,gt))
+    print(calc_pmi(comp,gt_micro))
+    print(calc_pmi(comp,gt_macro))
+    print(normalized_mutual_info_score(o,gt_micro))
+     print(normalized_mutual_info_score(o,gt_macro))
   
 
 
@@ -586,7 +597,7 @@ print('PMI')
 # file = 'Graphs/cora/network.pkl'
 # name = 'LFR'
 # file = 'Graphs/LFR/network.pkl'
-name = 'airport'
+name = 'airport_ww'
 file = 'Graphs/airport_ww/network.pkl'
 # comp = list(np.load('computed_airport.npy'))
 # name = 'wiki-fields'
