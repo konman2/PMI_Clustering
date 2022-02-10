@@ -525,7 +525,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     print(calc_pmi(comp,gt_micro))
     print(calc_pmi(comp,gt_macro))
     print(normalized_mutual_info_score(o,gt_micro))
-     print(normalized_mutual_info_score(o,gt_macro))
+    print(normalized_mutual_info_score(o,gt_macro))
   
 
 
