@@ -295,7 +295,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     #times = 10**np.linspace(-2,2,100)
 
     #times = np.linspace(10**(-3),10**3,2000)
-    times = np.linspace(10**(-3),10**3,1000)
+    times = np.linspace(10**(-2),10**2,100)
     P_orig = np.copy(P)
     #P_orig = P_orig.astype('float128')
     #print(P)
@@ -308,6 +308,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     final_pmis = []
 
     for iters,t in enumerate(times):
+        #print(t)
         P = sp.linalg.expm((P_orig-np.eye(P_orig.shape[0]))*t)
         M = np.log(P+sigma)-np.log(Pi+sigma)
         comp.append(M)
@@ -376,7 +377,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
         Mnc = np.copy(Mnn)
         final_cluster,pmi = find_clusters(Mcc,Mnn,Mcn,Mnc,Pi,np.sum(np.diag(Mnn)))
         uniq_vals,nc = np.unique(final_cluster,return_inverse=True)
-        print(nc, file = sourceFile)
+        print(nc,len(uniq_vals), t, file = sourceFile)
         predictions.append(nc)
         
     off_limits = set()
@@ -519,11 +520,13 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
         print(np.sum(signal))
         #print(predictions[0])
     _,o = np.unique(predictions[0],return_inverse=True)
-    print(o)
-    print(calc_pmi(comp,o))
-    print(gt)
-    print(calc_pmi(comp,gt_micro))
-    print(calc_pmi(comp,gt_macro))
+    print(o,len(_))
+    print(calc_pmi(comp,o)[0])
+    #print(gt)
+    print(calc_pmi(comp,gt_micro)[0])
+    print()
+    print(calc_pmi(comp,gt_macro)[0])
+    print()
     print(normalized_mutual_info_score(o,gt_micro))
     print(normalized_mutual_info_score(o,gt_macro))
   
