@@ -295,7 +295,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     #times = 10**np.linspace(-2,2,100)
 
     #times = np.linspace(10**(-3),10**3,2000)
-    times = np.linspace(10**(-2),10**2,100)
+    times = np.linspace(10**(-2),10**2,200)
     P_orig = np.copy(P)
     #P_orig = P_orig.astype('float128')
     #print(P)
@@ -506,7 +506,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
                 best_l = loc
                 #print(best_c)
                 #best_ind = i
-                    
+        
         next_clust = P.shape[0]+count
         # print(best_ind)
         #print(predictions[best_ind],best_c)
@@ -518,6 +518,8 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
         count+=1
         signal[best_l] = 1
         print(np.sum(signal))
+        print(best,best_loc)
+        print((np.sum(l),i) for i,l in enumerate(locs))
         #print(predictions[0])
     _,o = np.unique(predictions[0],return_inverse=True)
     print(o,len(_))
