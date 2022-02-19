@@ -117,19 +117,24 @@ def func(M,locs,nc,c,uniq_curr):
     l = nc == c
     return np.sum(np.sum(Mnn[l][:,l]))
 
-def find_best2(comp,locs,start=0):
-    Mnn = comp[0]
-    time = 0
-    # best =  np.sum(Mnn[np.where(nc == c)][:,np.where(nc==c)])
-    best = np.sum(Mnn[locs][:,locs])
-    for i in range(1,len(comp)):
-        Mnn = comp[i]
-        val = np.sum(Mnn[locs][:,locs])
-        if val > best:
-            time = i
-            best = val
-        # best = max(best,val)
-    return (best,time,locs)
+def find_best2(locs,comp,start=0):
+    #print(comp.shape)
+    vals = np.sum(np.sum(comp[:,locs][:,:,locs],axis=1),axis=1)
+    t = np.argmax(vals)
+    best = vals[t]
+    # Mnn = comp[0]
+    # time = 0
+    # # best =  np.sum(Mnn[np.where(nc == c)][:,np.where(nc==c)])
+    # best = np.sum(Mnn[locs][:,locs])
+    # for i in range(1,len(comp)):
+    #     Mnn = comp[i]
+    #     val = np.sum(Mnn[locs][:,locs])
+    #     if val > best:
+    #         time = i
+    #         best = val
+    #     # best = max(best,val)
+    return best/np.sum(locs)
+    #return (best/np.sum(locs),time,locs)
 def find_best(comp,nc,c,start=0):
     Mnn = comp[0]
     locs = nc == c
@@ -210,8 +215,8 @@ def arlei_graph():
     probs[0,1] = p
     probs[1,0] = p
 
-    probs[2,3] = p
-    probs[3,2] = p
+    probs[2,3] = 0.02
+    probs[3,2] = 0.02
     probs[0,2] = p
     probs[2,0] = p
 
@@ -239,8 +244,8 @@ def arlei_graph():
 def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micro',precomp=None):
     #G = nx.read_gpickle('Graphs/netsci/netsci_Gc.pkl')
     #G = nx.karate_club_graph()
-    gt_micro = []
-    gt_macro = []
+    # gt_micro = []
+    # gt_macro = []
     
     if name == 'airport':
         name = 'airport_ww'
@@ -252,7 +257,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     # gt = np.load(f'Graphs/{name}/micro_comms.npy')
     # assert len(gt) == len(G.nodes)
 
-    #G,gt,_ = arlei_graph()
+    # G,gt_micro,gt_macro = arlei_graph()
     #print(gt)
     # exit()
     # arr = [40,20,10]
@@ -476,14 +481,16 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     # print(calc_pmi(comp,o))
     # print(gt)
     # print(calc_pmi(comp,gt))
-    
-    
-    while(np.sum(signal)<P.shape[0]):
+    predictions = np.array(predictions)
+    total = 0
+    while(total<P.shape[0]):
         best_l = -1
         best_ind  = -1
         best = 0
         proc = set()
+        #valid_locs = np.array([])
         valid_locs = []
+        # s = time.time()
         for i,clustering in enumerate(predictions):
             clusters = np.unique(clustering)
             #print(clustering)
@@ -492,37 +499,73 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
                 if c >= P.shape[0]:
                     continue
                 l = clustering == c
-                if str(l) not in proc:
-                    valid_locs.append(l)
-                    proc.add(str(l))
+                #z = str(l)
+                l = l.reshape(1,P.shape[0])
+                #print(len(valid_locs))
+                if len(valid_locs) == 0:
+                    valid_locs = np.copy(l)
+                elif np.max(np.sum(valid_locs == l,axis=1)) < P.shape[0]:
+                    valid_locs = np.append(valid_locs,l,axis=0)
+                
+
+                # if z not in proc:
+                #     valid_locs.append(l)
+                #     proc.add(z)
+                
                 #print(clustering,c)
-        for loc in valid_locs:
-            val,t,locs = find_best2(comp,loc,start=0)
-            val/=np.sum(locs)
-            #print(val,i,t,c)
-            #val/=(len(locs)**2)
-            if val > best:
-                best = val
-                best_l = loc
+        # e = time.time()
+        # print(e-s)
+        # print(len(valid_locs))
+        # exit()
+        # s = time.time()
+        # for loc in valid_locs:
+        #     val= find_best2(loc,comp,start=0)
+        #     #val/=np.sum(locs)
+        #     #print(val,i,t,c)
+        #     #val/=(len(locs)**2)
+        #     if val > best:
+        #         best = val
+        #         best_l = loc
                 #print(best_c)
                 #best_ind = i
+        #print(valid_locs.shape)
+        vals = np.apply_along_axis(find_best2,1,valid_locs,comp)
         
+        #print(vals)
+        # exit()
+        best_i = np.argmax(vals)
+        best = vals[best_i]
+        # assert np.sum(best_l == valid_locs[best_i]) == P.shape[0]
+        best_l = valid_locs[best_i]
+        # e = time.time()
+        # print(e-s)
+        s = time.time()
         next_clust = P.shape[0]+count
         # print(best_ind)
         #print(predictions[best_ind],best_c)
         #locs = (predictions[best_ind] == best_c)
         #print(np.where(locs),best,best_c,best_ind)
-        for i in range(len(predictions)):
-            predictions[i][best_l] = next_clust
+        
+        predictions[:,best_l] = next_clust
+        # for i in range(len(predictions)):
+        #     predictions[i][best_l] != next_clust
         # off_limits.add(next_clust)
         count+=1
         signal[best_l] = 1
-        print(np.sum(signal))
-        print(best,best_loc)
-        print((np.sum(l),i) for i,l in enumerate(locs))
+        total = np.sum(signal)
+        # e = time.time()
+        # print(e-s)
+        # print()
+        #print(np.sum(signal))
+        #print(best,best_l)
+        #print((np.sum(l),i) for i,l in enumerate(locs))
         #print(predictions[0])
     _,o = np.unique(predictions[0],return_inverse=True)
     print(o,len(_))
+    # z = np.copy(o)
+    # z[z==2] = 1
+    print(z)
+    #print(calc_pmi(comp,z)[0])
     print(calc_pmi(comp,o)[0])
     #print(gt)
     print(calc_pmi(comp,gt_micro)[0])
