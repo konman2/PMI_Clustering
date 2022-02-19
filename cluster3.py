@@ -487,7 +487,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
         best_l = -1
         best_ind  = -1
         best = 0
-        proc = set()
+        #proc = set()
         #valid_locs = np.array([])
         valid_locs = []
         # s = time.time()
@@ -529,6 +529,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
                 #print(best_c)
                 #best_ind = i
         #print(valid_locs.shape)
+        print("#locs",len(valid_locs))
         vals = np.apply_along_axis(find_best2,1,valid_locs,comp)
         
         #print(vals)
@@ -553,6 +554,8 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
         count+=1
         signal[best_l] = 1
         total = np.sum(signal)
+        print(best,np.sum(best_l))
+        #print(np.sum(best_l))
         # e = time.time()
         # print(e-s)
         # print()
@@ -561,19 +564,21 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
         #print((np.sum(l),i) for i,l in enumerate(locs))
         #print(predictions[0])
     _,o = np.unique(predictions[0],return_inverse=True)
-    print(o,len(_))
+    outfile = open('results.txt', 'w')
+    print(o,len(_),file=outfile)
     # z = np.copy(o)
     # z[z==2] = 1
-    print(z)
+    #print(z)
     #print(calc_pmi(comp,z)[0])
-    print(calc_pmi(comp,o)[0])
+    print(calc_pmi(comp,o)[0],file=outfile)
     #print(gt)
-    print(calc_pmi(comp,gt_micro)[0])
-    print()
-    print(calc_pmi(comp,gt_macro)[0])
-    print()
-    print(normalized_mutual_info_score(o,gt_micro))
-    print(normalized_mutual_info_score(o,gt_macro))
+    print(calc_pmi(comp,gt_micro)[0],file=outfile)
+    print("",file=outfile)
+    print(calc_pmi(comp,gt_macro)[0],file=outfile)
+    print("",file=outfile)
+    print(normalized_mutual_info_score(o,gt_micro),file=outfile)
+    print(normalized_mutual_info_score(o,gt_macro),file=outfile)
+    outfile.close()
   
 
 
