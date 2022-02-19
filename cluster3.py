@@ -247,17 +247,17 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     # gt_micro = []
     # gt_macro = []
     
-    # if name == 'airport':
-    #     name = 'airport_ww'
-    # gt_micro = np.load(f'Graphs/{name}/micro_comms.npy')
-    # gt_macro = np.load(f'Graphs/{name}/macro_comms.npy')
+    if name == 'airport':
+        name = 'airport_ww'
+    gt_micro = np.load(f'Graphs/{name}/micro_comms.npy')
+    gt_macro = np.load(f'Graphs/{name}/macro_comms.npy')
 
 
     G = nx.read_gpickle(file)
     # gt = np.load(f'Graphs/{name}/micro_comms.npy')
     # assert len(gt) == len(G.nodes)
 
-    G,gt_micro,gt_macro = arlei_graph()
+    # G,gt_micro,gt_macro = arlei_graph()
     #print(gt)
     # exit()
     # arr = [40,20,10]
