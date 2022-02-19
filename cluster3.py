@@ -247,17 +247,17 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     # gt_micro = []
     # gt_macro = []
     
-    if name == 'airport':
-        name = 'airport_ww'
-    gt_micro = np.load(f'Graphs/{name}/micro_comms.npy')
-    gt_macro = np.load(f'Graphs/{name}/macro_comms.npy')
+    # if name == 'airport':
+    #     name = 'airport_ww'
+    # gt_micro = np.load(f'Graphs/{name}/micro_comms.npy')
+    # gt_macro = np.load(f'Graphs/{name}/macro_comms.npy')
 
 
     G = nx.read_gpickle(file)
     # gt = np.load(f'Graphs/{name}/micro_comms.npy')
     # assert len(gt) == len(G.nodes)
 
-    # G,gt_micro,gt_macro = arlei_graph()
+    G,gt_micro,gt_macro = arlei_graph()
     #print(gt)
     # exit()
     # arr = [40,20,10]
@@ -311,13 +311,16 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     P = None
     comp = []
     final_pmis = []
-
+    runtimes = []
+    s= time.time()
     for iters,t in enumerate(times):
         #print(t)
         P = sp.linalg.expm((P_orig-np.eye(P_orig.shape[0]))*t)
         M = np.log(P+sigma)-np.log(Pi+sigma)
         comp.append(M)
     comp = np.array(comp)
+    e = time.time()
+    runtimes.append(e-s)
     print(comp.shape)
     #exit()
 
@@ -333,7 +336,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     # exit()
     sourceFile = open('out.txt', 'w')
 
-
+    s = time.time()
     for iters,t in enumerate(times):
         M = comp[iters]
         uniq_curr,cc = np.unique(curr_clusters,return_inverse=True)
@@ -389,6 +392,9 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     signal = np.zeros(P.shape[0])
     count = 0
     sourceFile.close()
+    e = time.time()
+    runtimes.append(e-s)
+    s = time.time()
     print("started")
 
 
@@ -564,7 +570,9 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
         #print((np.sum(l),i) for i,l in enumerate(locs))
         #print(predictions[0])
     _,o = np.unique(predictions[0],return_inverse=True)
-    outfile = open('results.txt', 'w')
+    e = time.time()
+    runtimes.append(e-s)
+    outfile = open(f'./results/results-({int(times[0])},{int(times[-1])},{len(times)}).txt', 'w')
     print(o,len(_),file=outfile)
     # z = np.copy(o)
     # z[z==2] = 1
@@ -578,6 +586,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     print("",file=outfile)
     print(normalized_mutual_info_score(o,gt_micro),file=outfile)
     print(normalized_mutual_info_score(o,gt_macro),file=outfile)
+    print(runtimes,file=outfile)
     outfile.close()
   
 
