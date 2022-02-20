@@ -487,6 +487,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     # print(calc_pmi(comp,o))
     # print(gt)
     # print(calc_pmi(comp,gt))
+    #s = time.time()
     predictions = np.array(predictions)
     total = 0
     while(total<P.shape[0]):
@@ -546,7 +547,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
         best_l = valid_locs[best_i]
         # e = time.time()
         # print(e-s)
-        s = time.time()
+       
         next_clust = P.shape[0]+count
         # print(best_ind)
         #print(predictions[best_ind],best_c)
