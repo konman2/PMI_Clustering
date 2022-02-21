@@ -9,7 +9,7 @@ import sys
 import os
 from make_custom import *
 from sklearn.metrics import normalized_mutual_info_score,adjusted_rand_score,adjusted_mutual_info_score
-
+import pandas as pd
 min_inc = 0.0001
 def onestep(PMI,clusters,min_inc,Mcc,Mcn,Mnn,Mnc,Pi):
     #clust_a = [[i] for i in range(Mnn.shape[0])]
@@ -241,7 +241,7 @@ def arlei_graph():
     gt = np.array(gt)
     return sbm,gt,gt
 
-def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micro',precomp=None):
+def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micro',precomp=None,subgraph_locs=[]):
     #G = nx.read_gpickle('Graphs/netsci/netsci_Gc.pkl')
     #G = nx.karate_club_graph()
     # gt_micro = []
@@ -254,6 +254,12 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
 
 
     G = nx.read_gpickle(file)
+    if len(subgraph_locs)> 0 :
+        G = G.subgraph(subgraph_locs+1)
+        G = nx.relabel.convert_node_labels_to_integers(G)
+        gt_micro = gt_micro[subgraph_locs]
+        gt_macro = gt_macro[subgraph_locs]
+
     # gt = np.load(f'Graphs/{name}/micro_comms.npy')
     # assert len(gt) == len(G.nodes)
 
@@ -274,10 +280,11 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     elif flag == 'lp':
         folder = 'lmepmi'
     print(G.number_of_nodes())
+    
     #print(f.degree_vector(G).shape)
     #print(G.nodes)
 
-    sigma = 0
+    sigma = 1e-13
     d = f.degree_vector(G)
     vert = np.arange(len(d))
     #print(d)
@@ -286,7 +293,11 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     #P = np.asarray(np.matmul(D, A))
     #P = f.pagerank_transition_matrix(G,mu=0.1)
     #print(np.nonzero(P==0))
-    P = f.standard_random_walk_transition_matrix(G)
+    P = []
+    if nx.is_connected(G):
+        P = f.standard_random_walk_transition_matrix(G)
+    else:
+        P = f.pagerank_transition_matrix(G,mu=0.1)
     Pi = d/(np.sum(d))
     #pi = f.stationary_distribution(P)
     #Pi = np.diag(pi)
@@ -297,10 +308,10 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     y1= []
     y2 = []
    
-    #times = 10**np.linspace(-2,2,100)
+    times = 10**np.linspace(-2,2,100)
 
     #times = np.linspace(10**(-3),10**3,2000)
-    times = np.linspace(10**(-2),10**2,200)
+    #times = np.linspace(10**(-3),10,200)
     P_orig = np.copy(P)
     #P_orig = P_orig.astype('float128')
     #print(P)
@@ -497,6 +508,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
         #proc = set()
         #valid_locs = np.array([])
         valid_locs = []
+        og_pred = []
         # s = time.time()
         for i,clustering in enumerate(predictions):
             clusters = np.unique(clustering)
@@ -511,8 +523,10 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
                 #print(len(valid_locs))
                 if len(valid_locs) == 0:
                     valid_locs = np.copy(l)
+                    og_pred.append(i)
                 elif np.max(np.sum(valid_locs == l,axis=1)) < P.shape[0]:
                     valid_locs = np.append(valid_locs,l,axis=0)
+                    og_pred.append(i)
                 
 
                 # if z not in proc:
@@ -561,7 +575,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
         count+=1
         signal[best_l] = 1
         total = np.sum(signal)
-        print(best,np.sum(best_l))
+        print(best,np.sum(best_l),og_pred[best_i])
         #print(np.sum(best_l))
         # e = time.time()
         # print(e-s)
@@ -669,6 +683,10 @@ file = 'Graphs/airport_ww/network.pkl'
 # file = 'Graphs/entsoe/network.pkl'
 # name = 'custom'
 # file = 'Graphs/custom/network.pkl'
+# data = pd.read_csv('Graphs/airport_ww/node_info.csv')
+# cnt = np.where(data['Continent'].to_numpy() == 'North America')[0]
+
+#run(file=file,name=name,subgraph_locs=cnt)
 run(file=file,name=name)
 ##############################################
 # flag is first argument for runner function so for pmi flag is 'p'
