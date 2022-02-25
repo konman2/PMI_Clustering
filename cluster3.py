@@ -187,20 +187,24 @@ def find_best(comp,nc,c,start=0):
 def calc_pmi(comp,clust,locs=None):
     if str(type(locs)) == '<class \'NoneType\'>':
         locs = np.ones(len(clust), dtype=bool)
+
     uniq_curr,cc = np.unique(clust,return_inverse=True)
     total = 0
     clust_scores = []
     for c in uniq_curr:
         Mnn = comp[0]
         clust_locs = (clust==c) & locs
+        vals = np.sum(np.sum(comp[:,clust_locs][:,:,clust_locs],axis=1),axis=1)
+        t = np.argmax(vals)
+        #best = vals[t]
         best = np.sum(Mnn[clust_locs][:,clust_locs])
-        best_time = 0
-        for t in range(1,len(comp)):
-            Mnn = comp[t]
-            val = np.sum(Mnn[clust_locs][:,clust_locs])
-            if val > best:
-                best = val
-                best_time = t
+        best_time = t
+        # for t in range(1,len(comp)):
+        #     Mnn = comp[t]
+        #     val = np.sum(Mnn[clust_locs][:,clust_locs])
+        #     if val > best:
+        #         best = val
+        #         best_time = t
         total+=best
         clust_scores.append((c,best,best_time))
     return (total,clust_scores)
@@ -308,7 +312,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     y1= []
     y2 = []
    
-    times = 10**np.linspace(-2,2,100)
+    times = 10**np.linspace(-3,3,200)
 
     #times = np.linspace(10**(-3),10**3,2000)
     #times = np.linspace(10**(-3),10,200)
@@ -406,6 +410,15 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     e = time.time()
     runtimes.append(e-s)
     s = time.time()
+    if not os.path.isdir(f'Predictions/new'):
+        os.mkdir(f'Predictions/{name}')
+    if not os.path.isdir(f'Predictions/{name}/new'):
+        os.mkdir(f'Predictions/{name}/new')
+    np.save('Predictions/{}/new/predicted_communities_{}'.format(name,len(times)),np.array(predictions))
+    # np.save('Predictions/{}/{}/times'.format(name,folder),times)
+    # np.save('Predictions/{}/{}/time_taken'.format(name,folder),np.array(time_taken))
+    # np.save('Predictions/{}/{}/num_clusters'.format(name,folder),np.array(num_clusters))
+    # np.save('Predictions/{}/{}/values'.format(name,folder),np.array(final_pmis))
     print("started")
 
 
@@ -587,7 +600,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     _,o = np.unique(predictions[0],return_inverse=True)
     e = time.time()
     runtimes.append(e-s)
-    outfile = open(f'./results/results-({int(times[0])},{int(times[-1])},{len(times)}).txt', 'w')
+    outfile = open(f'./results/results_{name}-({int(times[0])},{int(times[-1])},{len(times)}).txt', 'w')
     print(o,len(_),file=outfile)
     # z = np.copy(o)
     # z[z==2] = 1
