@@ -411,7 +411,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     e = time.time()
     runtimes.append(e-s)
     s = time.time()
-    if not os.path.isdir(f'Predictions/new'):
+    if not os.path.isdir(f'Predictions/{name}'):
         os.mkdir(f'Predictions/{name}')
     if not os.path.isdir(f'Predictions/{name}/new'):
         os.mkdir(f'Predictions/{name}/new')
