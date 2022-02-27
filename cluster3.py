@@ -196,8 +196,8 @@ def calc_pmi(comp,clust,locs=None):
         clust_locs = (clust==c) & locs
         vals = np.sum(np.sum(comp[:,clust_locs][:,:,clust_locs],axis=1),axis=1)
         t = np.argmax(vals)
-        #best = vals[t]
-        best = np.sum(Mnn[clust_locs][:,clust_locs])
+        best = vals[t]
+        #best = np.sum(Mnn[clust_locs][:,clust_locs])
         best_time = t
         # for t in range(1,len(comp)):
         #     Mnn = comp[t]
@@ -268,6 +268,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     # assert len(gt) == len(G.nodes)
 
     # G,gt_micro,gt_macro = arlei_graph()
+    # name="a"
     #print(gt)
     # exit()
     # arr = [40,20,10]
@@ -312,7 +313,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     y1= []
     y2 = []
    
-    times = 10**np.linspace(-3,3,200)
+    times = 10**np.linspace(-3,3,50)
 
     #times = np.linspace(10**(-3),10**3,2000)
     #times = np.linspace(10**(-3),10,200)
