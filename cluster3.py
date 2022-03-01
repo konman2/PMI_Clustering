@@ -335,6 +335,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
         M = np.log(P+sigma)-np.log(Pi+sigma)
         comp.append(M)
     comp = np.array(comp)
+    np.save(f'./trans_{name}_{len(times)}',comp)
     e = time.time()
     runtimes.append(e-s)
     print(comp.shape)
@@ -688,11 +689,11 @@ print('PMI')
 # file = 'Graphs/cora/network.pkl'
 # name = 'LFR'
 # file = 'Graphs/LFR/network.pkl'
-name = 'airport_ww'
-file = 'Graphs/airport_ww/network.pkl'
+# name = 'airport_ww'
+# file = 'Graphs/airport_ww/network.pkl'
 # comp = list(np.load('computed_airport.npy'))
-# name = 'wiki-fields'
-# file = 'Graphs/wiki-fields/network.pkl'
+name = 'wiki-fields'
+file = 'Graphs/wiki-fields/network.pkl'
 # name = 'entsoe'
 # file = 'Graphs/entsoe/network.pkl'
 # name = 'custom'
