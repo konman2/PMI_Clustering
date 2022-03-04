@@ -329,13 +329,18 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     final_pmis = []
     runtimes = []
     s= time.time()
-    for iters,t in enumerate(times):
-        #print(t)
-        P = sp.linalg.expm((P_orig-np.eye(P_orig.shape[0]))*t)
-        M = np.log(P+sigma)-np.log(Pi+sigma)
-        comp.append(M)
-    comp = np.array(comp)
-    np.save(f'./trans_{name}_{len(times)}',comp)
+    comp = []
+    if  os.path.isfile(f'./trans_{name}_{len(times)}.npy'):
+        print('Loaded from File')
+        comp = np.load(f'./trans_{name}_{len(times)}.npy')
+    else:
+        for iters,t in enumerate(times):
+            #print(t)
+            P = sp.linalg.expm((P_orig-np.eye(P_orig.shape[0]))*t)
+            M = np.log(P+sigma)-np.log(Pi+sigma)
+            comp.append(M)
+        comp = np.array(comp)
+        np.save(f'./trans_{name}_{len(times)}',comp)
     e = time.time()
     runtimes.append(e-s)
     print(comp.shape)
@@ -675,11 +680,11 @@ print('PMI')
 # file = 'Graphs/cora/network.pkl'
 # name = 'LFR'
 # file = 'Graphs/LFR/network.pkl'
-name = 'airport_ww'
-file = 'Graphs/airport_ww/network.pkl'
+# name = 'airport_ww'
+# file = 'Graphs/airport_ww/network.pkl'
 # comp = list(np.load('computed_airport.npy'))
-# name = 'wiki-fields'
-# file = 'Graphs/wiki-fields/network.pkl'
+name = 'wiki-fields'
+file = 'Graphs/wiki-fields/network.pkl'
 # name = 'entsoe'
 # file = 'Graphs/entsoe/network.pkl'
 # name = 'custom'
