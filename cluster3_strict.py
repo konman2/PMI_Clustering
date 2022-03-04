@@ -333,6 +333,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     if  os.path.isfile(f'./trans_{name}_{len(times)}.npy'):
         print('Loaded from File')
         comp = np.load(f'./trans_{name}_{len(times)}.npy')
+        P = P_cum
     else:
         for iters,t in enumerate(times):
             #print(t)
