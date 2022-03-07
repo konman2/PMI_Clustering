@@ -692,10 +692,10 @@ print('PMI')
 # name = 'airport_ww'
 # file = 'Graphs/airport_ww/network.pkl'
 # comp = list(np.load('computed_airport.npy'))
-name = 'wiki-fields'
-file = 'Graphs/wiki-fields/network.pkl'
-# name = 'entsoe'
-# file = 'Graphs/entsoe/network.pkl'
+# name = 'wiki-fields'
+# file = 'Graphs/wiki-fields/network.pkl'
+name = 'entsoe'
+file = 'Graphs/entsoe/network.pkl'
 # name = 'custom'
 # file = 'Graphs/custom/network.pkl'
 # data = pd.read_csv('Graphs/airport_ww/node_info.csv')
