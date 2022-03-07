@@ -91,7 +91,7 @@ s= time.time()
 name = 'entsoe'
 comp = np.load(f'./trans_{name}_{len(times)}.npy')
 outfile = open(f'./results/pmi_values_{name}', 'w')
-print(o,len(_),file=outfile)
+
 m = 0
 loc = 0
 for c,p in enumerate(predictions):
