@@ -100,4 +100,4 @@ for c,p in enumerate(predictions):
     if val > m:
         loc = c
         m = val
-print("MAX: ",c,val,file=outfile)
+print("MAX: ",loc,m,file=outfile)

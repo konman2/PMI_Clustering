@@ -520,7 +520,9 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     # print(gt)
     # print(calc_pmi(comp,gt))
     #s = time.time()
+    predictions.append(np.arange(P.shape[0]))
     predictions = np.array(predictions)
+    
     final_output = np.zeros(P.shape[0])
 
     valid_locs = []
