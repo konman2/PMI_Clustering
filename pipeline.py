@@ -113,7 +113,7 @@ ax1.set_xlabel('Markov time log scale')
 ax1.set_ylabel('PMI')
 ax1.set_title(f'{name} PMIs at Different Times')
 ax1.plot(times,pmis,label='1')
-ax1.plot(times,opt_pmi,label='2')
+ax1.plot(times,np.array([opt_pmi for i in times]),label='2')
 fig1.savefig('./results/plot_{name}_pmi')
 
 #     print(c,val, normalized_mutual_info_score(p,gt_micro),normalized_mutual_info_score(p,gt_macro),file=outfile)
