@@ -30,7 +30,7 @@ def calc_pmi(comp,clust,locs=None):
         clust_scores.append((c,best,best_time))
     return (total,clust_scores)
 taus=50
-name = 'airport_ww'
+name = 'entsoe'
 filename = f'Predictions/{name}/new/predicted_communities_{taus}.npy'
 predictions = np.load(filename)
 file = f'Graphs/{name}/network.pkl'
@@ -114,7 +114,7 @@ ax1.set_ylabel('PMI')
 ax1.set_title(f'{name} PMIs at Different Times')
 ax1.plot(times,pmis,label='1')
 ax1.plot(times,np.array([opt_pmi for i in times]),label='2')
-fig1.savefig('./results/plot_{name}_pmi')
+fig1.savefig(f'./results/plot_{name}_pmi')
 
 #     print(c,val, normalized_mutual_info_score(p,gt_micro),normalized_mutual_info_score(p,gt_macro),file=outfile)
 #     if val > m:
