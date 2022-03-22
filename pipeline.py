@@ -94,7 +94,7 @@ comp = np.load(f'./trans_{name}_{len(times)}.npy')
 results_file = f'./results/results_{name}-(0,1000,50).txt'
 results_file_strict = f'./results/results_{name}_strict-(0,1000,50).txt'
 results = open(results_file).readlines()
-results_strict = open(results_file).readlines()
+results_strict = open(results_file_strict).readlines()
 
 opt_pmi_strict = float(results_strict[1][:-1])
 micro_nmi_strict = float(results_strict[-3][:-1])
