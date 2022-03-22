@@ -111,8 +111,9 @@ for c,p in enumerate(predictions):
     nmis_macro.append(normalized_mutual_info_score(p,gt_macro))
 nmis_micro = np.array(nmis_micro)
 nmis_macro=np.array(nmis_macro)
+times = np.linspace(-3,3,50)
 # pmis=np.array(pmis)
-# times = np.linspace(-3,3,50)
+
 # fig1,ax1 = plt.subplots()
 # ax1.set_xlabel('Markov time log scale')
 # ax1.set_ylabel('PMI')
