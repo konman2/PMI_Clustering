@@ -30,7 +30,7 @@ def calc_pmi(comp,clust,locs=None):
         clust_scores.append((c,best,best_time))
     return (total,clust_scores)
 taus=50
-name = 'airport_ww'
+name = 'wiki-fields'
 filename = f'Predictions/{name}/new/predicted_communities_{taus}.npy'
 predictions = np.load(filename)
 file = f'Graphs/{name}/network.pkl'
