@@ -30,7 +30,7 @@ def calc_pmi(comp,clust,locs=None):
         clust_scores.append((c,best,best_time))
     return (total,clust_scores)
 taus=50
-name = 'wiki-fields'
+name = 'entsoe'
 filename = f'Predictions/{name}/new/predicted_communities_{taus}.npy'
 predictions = np.load(filename)
 file = f'Graphs/{name}/network.pkl'
@@ -92,21 +92,26 @@ s= time.time()
 comp = np.load(f'./trans_{name}_{len(times)}.npy')
 # outfile = open(f'./results/pmi_values_{name}', 'w')
 results_file = f'./results/results_{name}-(0,1000,50).txt'
+results_file_strict = f'./results/results_{name}_strict-(0,1000,50).txt'
 results = open(results_file).readlines()
+results_strict = open(results_file).readlines()
 
+opt_pmi_strict = float(results_strict[1][:-1])
+micro_nmi_strict = float(results_strict[-3][:-1])
+macro_nmi_strict = float(results_strict[-2][:-1])
 opt_pmi = float(results[1][:-1])
 micro_nmi = float(results[-3][:-1])
 macro_nmi = float(results[-2][:-1])
-print(opt_pmi)
+print(opt_pmi,opt_pmi_strict)
 pmis = []
 nmis_micro = []
 nmis_macro = []
 m = 0
 loc = 0
 for c,p in enumerate(predictions):
-    # val = calc_pmi(comp,p)[0]
-    # print(c,val)
-    # pmis.append(val)
+    val = calc_pmi(comp,p)[0]
+    print(c,val)
+    pmis.append(val)
     nmis_micro.append(normalized_mutual_info_score(p,gt_micro))
     nmis_macro.append(normalized_mutual_info_score(p,gt_macro))
 nmis_micro = np.array(nmis_micro)
@@ -114,13 +119,14 @@ nmis_macro=np.array(nmis_macro)
 times = np.linspace(-3,3,50)
 # pmis=np.array(pmis)
 
-# fig1,ax1 = plt.subplots()
-# ax1.set_xlabel('Markov time log scale')
-# ax1.set_ylabel('PMI')
-# ax1.set_title(f'{name} PMIs at Different Times')
-# ax1.plot(times,pmis,label='1')
-# ax1.plot(times,np.array([opt_pmi for i in times]),label='2')
-# fig1.savefig(f'./results/plot_{name}_pmi')
+fig1,ax1 = plt.subplots()
+ax1.set_xlabel('Markov time log scale')
+ax1.set_ylabel('PMI')
+ax1.set_title(f'{name} PMIs at Different Times')
+ax1.plot(times,pmis,label='1')
+ax1.plot(times,np.array([opt_pmi for i in times]),label='2')
+ax1.plot(times,np.array([opt_pmi_strict for i in times]),label='3')
+fig1.savefig(f'./results/plot_{name}_pmi')
 
 fig2,ax2 = plt.subplots()
 ax2.set_xlabel('Markov time log scale')
@@ -128,6 +134,7 @@ ax2.set_ylabel('NMI')
 ax2.set_title(f'{name} NMI at Different Times (Micro)')
 ax2.plot(times,nmis_micro,label='1')
 ax2.plot(times,np.array([ micro_nmi for i in times]),label='2')
+ax2.plot(times,np.array([ micro_nmi_strict for i in times]),label='3')
 fig2.savefig(f'./results/plot_{name}_nmi_micro')
 
 fig3,ax3 = plt.subplots()
@@ -136,6 +143,7 @@ ax3.set_ylabel('NMI')
 ax3.set_title(f'{name} NMI at Different Times (Macro)')
 ax3.plot(times,nmis_macro,label='1')
 ax3.plot(times,np.array([ macro_nmi for i in times]),label='2')
+ax3.plot(times,np.array([ macro_nmi_strict for i in times]),label='3')
 fig3.savefig(f'./results/plot_{name}_nmi_macro')
 
 #     print(c,val, normalized_mutual_info_score(p,gt_micro),normalized_mutual_info_score(p,gt_macro),file=outfile)
