@@ -117,7 +117,7 @@ def func(M,locs,nc,c,uniq_curr):
     l = nc == c
     return np.sum(np.sum(Mnn[l][:,l]))
 
-def find_best2(locs,comp,start=0):
+def find_best2(locs,comp,deg_vec,start=0):
     #print(comp.shape)
     vals = np.sum(np.sum(comp[:,locs][:,:,locs],axis=1),axis=1)
     t = np.argmax(vals)
@@ -133,7 +133,7 @@ def find_best2(locs,comp,start=0):
     #         time = i
     #         best = val
     #     # best = max(best,val)
-    return best/np.sum(locs)
+    return best/np.sum(deg_vec[locs])
     #return (best/np.sum(locs),time,locs)
 def find_best(comp,nc,c,start=0):
     Mnn = comp[0]
@@ -566,7 +566,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
                 #best_ind = i
         #print(valid_locs.shape)
         print("#locs",len(valid_locs))
-        vals = np.apply_along_axis(find_best2,1,valid_locs,comp)
+        vals = np.apply_along_axis(find_best2,1,valid_locs,comp,d)
         
         #print(vals)
         # exit()
@@ -689,13 +689,13 @@ print('PMI')
 # file = 'Graphs/cora/network.pkl'
 # name = 'LFR'
 # file = 'Graphs/LFR/network.pkl'
-# name = 'airport_ww'
-# file = 'Graphs/airport_ww/network.pkl'
+name = 'airport_ww'
+file = 'Graphs/airport_ww/network.pkl'
 # comp = list(np.load('computed_airport.npy'))
 # name = 'wiki-fields'
 # file = 'Graphs/wiki-fields/network.pkl'
-name = 'entsoe'
-file = 'Graphs/entsoe/network.pkl'
+# name = 'entsoe'
+# file = 'Graphs/entsoe/network.pkl'
 # name = 'custom'
 # file = 'Graphs/custom/network.pkl'
 # data = pd.read_csv('Graphs/airport_ww/node_info.csv')
