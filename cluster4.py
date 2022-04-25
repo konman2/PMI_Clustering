@@ -14,8 +14,8 @@ min_inc = 0.0001
 
 
 def find_cluster(seed_node,min_inc,Mnn,debug=False):
-    Mcn = Mnn[seed_node]
-    Mnc = Mnn[:,seed_node]
+    Mcn = np.copy(Mnn[seed_node])
+    Mnc = np.copy(Mnn[:,seed_node])
     tol =1e-13
     increased = True
     count = 0
