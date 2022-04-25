@@ -267,7 +267,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     # gt = np.load(f'Graphs/{name}/micro_comms.npy')
     # assert len(gt) == len(G.nodes)
 
-    # G,gt_micro,gt_macro = arlei_graph()
+    #G,gt_micro,gt_macro = arlei_graph()
     # name="a"
     #print(gt)
     # exit()
@@ -356,7 +356,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
     sourceFile = open('out.txt', 'w')
 
     s = time.time()
-    selected = np.random.choice(P.shape[0],P.shape[0]//2)
+    selected = np.random.choice(P.shape[0],(P.shape[0]*2)//3)
     for iters,t in enumerate(times):
         M = np.copy(comp[iters])
         for s in selected:
