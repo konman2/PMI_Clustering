@@ -603,7 +603,7 @@ def run(flag='p',file='Graphs/airport_ww/network.pkl',name='airport',times='micr
         print("#locs",len(valid_locs))
         #vals = np.apply_along_axis(find_best2,1,valid_locs,comp,d)
         # count_votes(locs,comp,deg_vec,selected,start=0)
-        selected = np.random.choice(P.shape[0],(P.shape[0]*1)//2)
+        selected = np.random.choice(P.shape[0],(P.shape[0]*2)//3)
         vals = np.apply_along_axis(count_votes,1,valid_locs,comp,d,selected)
         #print(vals)
         # exit()
